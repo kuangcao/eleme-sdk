@@ -1,12 +1,17 @@
 package com.jiabangou.eleme.sdk.api.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
+import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
+import okhttp3.*;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
@@ -27,9 +32,11 @@ public class BaseServiceImpl {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseServiceImpl.class);
 
     protected ElemeConfigStorage configStorage;
+    protected OkHttpClient client;
 
-    public BaseServiceImpl(ElemeConfigStorage configStorage) {
+    public BaseServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
         this.configStorage = configStorage;
+        this.client = client;
     }
 
     protected static String urlEncode(String str) {
@@ -65,8 +72,8 @@ public class BaseServiceImpl {
             }
         }
         forSignatureStr.append(realUri);
-        List<String> sortParams = realParams.keySet().stream()
-                .map(key->key + "=" + urlEncode(realParams.get(key))).sorted().collect(Collectors.toList());
+        List<String> sortParams = realParams.entrySet().stream()
+                .map(entry->entry.getKey() + "=" + urlEncode(entry.getValue())).sorted().collect(Collectors.toList());
         if (!isGetOrDelete) {
             realUri = forSignatureStr.toString();
         }
@@ -85,6 +92,42 @@ public class BaseServiceImpl {
             realParams.put("sig", signature);
             return new RealUriAndParams(realUri, realParams);
         }
+    }
+
+    protected JSONObject execute(String httpMethod, String url, Map<String, String> params) throws ElemeErrorException {
+
+        OkHttpClient client = new OkHttpClient();
+        RealUriAndParams rp = createRealUriAndParams(httpMethod, url, params);
+        Request.Builder builder = new Request.Builder();
+        builder.url(rp.getRealUri());
+
+        if (HTTP_METHOD_DELETE.equals(httpMethod)) {
+            builder.delete();
+        } else if (HTTP_METHOD_POST.equals(httpMethod)) {
+            builder.post(createFormBody(rp.getParams()));
+        } else if (HTTP_METHOD_PUT.equals(httpMethod)) {
+            builder.put(createFormBody(rp.getParams()));
+        }
+        Response response = null;
+        try {
+            response = client.newCall(builder.build()).execute();
+            JSONObject jsonObject = (JSONObject)JSONObject.parse(response.body().string());
+            int code = jsonObject.getIntValue("code");
+            if (code != 200) {
+                throw new ElemeErrorException(code, jsonObject.getString("message"));
+            }
+            return jsonObject.getJSONObject("data");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private RequestBody createFormBody(Map<String, String> params) {
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            formBodyBuilder.add(entry.getKey(), entry.getValue());
+        }
+        return formBodyBuilder.build();
     }
 
     static class RealUriAndParams {

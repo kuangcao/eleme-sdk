@@ -13,7 +13,7 @@ public class BaseServiceImplTest {
 
     @Test
     public void testCreateRealUriAndParams() {
-        BaseServiceImpl baseService = new BaseServiceImpl(new ElemeConfigStorage() {
+        BaseServiceImpl baseService = new BaseServiceImpl(null, new ElemeConfigStorage() {
             @Override
             public String getConsumerKey() {
                 return "0170804777";
@@ -37,6 +37,7 @@ public class BaseServiceImplTest {
 
         rp = baseService.createRealUriAndParams(BaseServiceImpl.HTTP_METHOD_PUT, "/food/${food_id}/", params);
         System.out.println(rp.toString());
-
+        float abc = 12.21223f;
+        System.out.println(String.valueOf(abc));
     }
 }
