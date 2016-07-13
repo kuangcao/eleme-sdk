@@ -1,6 +1,5 @@
 package com.jiabangou.eleme.sdk.api.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
@@ -14,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -111,10 +112,12 @@ public class BaseServiceImpl {
         Response response = null;
         try {
             response = client.newCall(builder.build()).execute();
-            JSONObject jsonObject = (JSONObject)JSONObject.parse(response.body().string());
+            String jsonStr = response.body().string();
+
+            JSONObject jsonObject = JSONObject.parseObject(jsonStr);
             int code = jsonObject.getIntValue("code");
             if (code != 200) {
-                throw new ElemeErrorException(code, jsonObject.getString("message"));
+                throw new ElemeErrorException(code, jsonObject.getString("message"), jsonStr);
             }
             return jsonObject.getJSONObject("data");
         } catch (IOException e) {

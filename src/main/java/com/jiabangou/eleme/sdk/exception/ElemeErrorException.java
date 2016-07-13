@@ -8,6 +8,13 @@ import com.jiabangou.eleme.sdk.model.ElemeError;
 public class ElemeErrorException extends Exception {
 
     protected int code;
+    protected String jsonString;
+
+    public ElemeErrorException(int code, String message, String jsonString) {
+        super(message);
+        this.code = code;
+        this.jsonString = jsonString;
+    }
 
     public ElemeErrorException(int code, String message) {
         super(message);
@@ -19,16 +26,20 @@ public class ElemeErrorException extends Exception {
         this.code = error.getErrorCode();
     }
 
+    public String getJsonString() {
+        return jsonString;
+    }
+
     public int getCode() {
         return code;
     }
 
     @Override
     public String toString() {
-        return "BdWmErrorException{" +
+        return "ElemeErrorException{" +
                 "code=" + code +
                 ", message=" + getMessage() +
-                "} " + super.toString();
+                ", jsonString='" + jsonString + '\'' +
+                '}';
     }
-
 }
