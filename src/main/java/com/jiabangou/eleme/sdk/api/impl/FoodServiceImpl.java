@@ -26,7 +26,7 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
     private final static String FOOD_BATCH_GET = "/foods/batch_get/";
     private final static String FOOD = "/food/";
     private final static String FOOD_BATCH_DELETE = "/foods/batch_delete/";
-    private final static String FOOD_CATEGORY_FOOD_CATEGORY_ID_FOODS = "/food_category/${food_category_id}/foods";
+    private final static String FOOD_CATEGORY_FOOD_CATEGORY_ID_FOODS = "/food_category/${food_category_id}/foods/";
 
     public FoodServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
         super(client, configStorage);

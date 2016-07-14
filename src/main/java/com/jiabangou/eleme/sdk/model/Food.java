@@ -1,7 +1,5 @@
 package com.jiabangou.eleme.sdk.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.io.Serializable;
 import java.util.List;
 

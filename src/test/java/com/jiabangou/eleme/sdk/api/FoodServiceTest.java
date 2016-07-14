@@ -5,31 +5,16 @@ import com.jiabangou.eleme.sdk.api.impl.ElemeClientImpl;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Food;
 import com.jiabangou.eleme.sdk.model.FoodSave;
+import org.apache.commons.codec.binary.Hex;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
-public class FoodServiceTest {
+public class FoodServiceTest extends ServiceTest {
 
-
-    private static ElemeClient elemeClient;
-
-    @BeforeClass
-    public static void BeforeClass() {
-        elemeClient = new ElemeClientImpl(new ElemeConfigStorage() {
-            @Override
-            public String getConsumerKey() {
-                return "0170804777";
-            }
-
-            @Override
-            public String getConsumerSecret() {
-                return "87217cb263701f90316236c4df00d9352fb1da76";
-            }
-        });
-    }
 
     @Test
     public void testGetById() throws ElemeErrorException {
@@ -72,5 +57,27 @@ public class FoodServiceTest {
         elemeClient.getFoodService().remove(113887406L);
     }
 
+    @Test
+    public void testGetsByFoodCategoryId() throws ElemeErrorException {
+        List<Food> foods = elemeClient.getFoodService().getsByFoodCategoryId(10963900L);
+        System.out.println(foods);
+    }
+
+    @Test
+    public void test() {
+        String hello = "http://v2.openapi.ele.me/food_category/10963900/foods/?consumer_key=0170804777&timestamp=146851328687217cb263701f90316236c4df00d9352fb1da76";
+        try {
+            String hexString = Hex.encodeHexString(hello.getBytes("utf-8"));
+            String hexString2 = Hex.encodeHexString(hello.getBytes("ascii"));
+            String hexString3 = Hex.encodeHexString(hello.getBytes("gbk"));
+            String hexString4 = new String(Hex.encodeHex(hello.getBytes("utf-8"), false));
+            System.out.println(hexString);
+            System.out.println(hexString2);
+            System.out.println(hexString3);
+            System.out.println(hexString4);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

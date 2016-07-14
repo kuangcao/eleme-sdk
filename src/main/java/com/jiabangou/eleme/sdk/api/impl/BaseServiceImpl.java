@@ -84,7 +84,6 @@ public class BaseServiceImpl {
         if (isGetOrDelete) {
             realUri = forSignatureStr.toString();
         }
-
         String signature = DigestUtils.sha1Hex(toHex(forSignatureStr.toString() + configStorage.getConsumerSecret()));
 
         if (isGetOrDelete) {

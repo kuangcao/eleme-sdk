@@ -1,8 +1,6 @@
 package com.jiabangou.eleme.sdk.api.impl;
 
-import com.jiabangou.eleme.sdk.api.ElemeClient;
-import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
-import com.jiabangou.eleme.sdk.api.FoodService;
+import com.jiabangou.eleme.sdk.api.*;
 import okhttp3.OkHttpClient;
 
 /**
@@ -14,6 +12,8 @@ public final class ElemeClientImpl implements ElemeClient {
     private ElemeConfigStorage configStorage;
     private OkHttpClient client;
     private FoodService foodService;
+    private RestaurantService restaurantService;
+    private FoodCategoryService foodCategoryService;
 
     public ElemeClientImpl(ElemeConfigStorage configStorage) {
         this.configStorage = configStorage;
@@ -39,4 +39,22 @@ public final class ElemeClientImpl implements ElemeClient {
         }
         return foodService;
     }
+
+    @Override
+    public FoodCategoryService getFoodCategoryService() {
+        if (foodCategoryService == null) {
+            foodCategoryService = new FoodCategoryServiceImpl(getClient(), configStorage);
+        }
+        return foodCategoryService;
+    }
+
+    @Override
+    public RestaurantService getRestaurantService() {
+        if (restaurantService == null) {
+            restaurantService = new RestaurantServiceImpl(getClient(), configStorage);
+        }
+        return restaurantService;
+    }
+
+
 }

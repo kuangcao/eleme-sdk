@@ -19,6 +19,7 @@ public class FoodCategoryServiceImpl extends BaseServiceImpl implements FoodCate
 
     private final static String FOOD_CATEGORY_FOOD_CATEGORY_ID = "/food_category/${food_category_id}/";
 
+
     public FoodCategoryServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
         super(client, configStorage);
     }
