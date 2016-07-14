@@ -2,18 +2,24 @@ package com.jiabangou.eleme.sdk.exception;
 
 import com.jiabangou.eleme.sdk.model.ElemeError;
 
+import java.util.Map;
+
 /**
  * Created by freeway on 16/7/11.
  */
 public class ElemeErrorException extends Exception {
 
     protected int code;
-    protected String jsonString;
+    protected String responseString;
+    protected String requestUrl;
+    protected Map<String, String> requestParams;
 
-    public ElemeErrorException(int code, String message, String jsonString) {
+    public ElemeErrorException(int code, String message, String requestUrl, Map<String, String> requestParams, String responseString) {
         super(message);
         this.code = code;
-        this.jsonString = jsonString;
+        this.responseString = responseString;
+        this.requestUrl = requestUrl;
+        this.requestParams = requestParams;
     }
 
     public ElemeErrorException(int code, String message) {
@@ -26,9 +32,6 @@ public class ElemeErrorException extends Exception {
         this.code = error.getErrorCode();
     }
 
-    public String getJsonString() {
-        return jsonString;
-    }
 
     public int getCode() {
         return code;
@@ -37,9 +40,11 @@ public class ElemeErrorException extends Exception {
     @Override
     public String toString() {
         return "ElemeErrorException{" +
-                "code=" + code +
-                ", message=" + getMessage() +
-                ", jsonString='" + jsonString + '\'' +
+                "code=" + code + "\n" +
+                ", message=" + getMessage() + "\n" +
+                ", responseString='" + responseString + '\'' + "\n" +
+                ", requestUrl='" + requestUrl + '\'' + "\n" +
+                ", requestParams=" + requestParams +
                 '}';
     }
 }

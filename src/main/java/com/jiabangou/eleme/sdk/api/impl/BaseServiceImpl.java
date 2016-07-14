@@ -105,9 +105,13 @@ public class BaseServiceImpl {
         if (HTTP_METHOD_DELETE.equals(httpMethod)) {
             builder.delete();
         } else if (HTTP_METHOD_POST.equals(httpMethod)) {
-            builder.post(createFormBody(rp.getParams()));
+            RequestBody requestBody = createFormBody(rp.getParams());
+            System.out.println(requestBody.toString());
+            builder.post(requestBody);
         } else if (HTTP_METHOD_PUT.equals(httpMethod)) {
-            builder.put(createFormBody(rp.getParams()));
+            RequestBody requestBody = createFormBody(rp.getParams());
+            System.out.println(requestBody.toString());
+            builder.put(requestBody);
         }
         Response response = null;
         try {
@@ -117,7 +121,7 @@ public class BaseServiceImpl {
             JSONObject jsonObject = JSONObject.parseObject(jsonStr);
             int code = jsonObject.getIntValue("code");
             if (code != 200) {
-                throw new ElemeErrorException(code, jsonObject.getString("message"), jsonStr);
+                throw new ElemeErrorException(code, jsonObject.getString("message"), rp.getRealUri(), rp.getParams(), jsonStr);
             }
             return jsonObject.getJSONObject("data");
         } catch (IOException e) {

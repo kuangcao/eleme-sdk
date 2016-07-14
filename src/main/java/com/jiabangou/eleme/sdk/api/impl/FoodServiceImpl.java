@@ -6,7 +6,7 @@ import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.api.FoodService;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Food;
-import com.jiabangou.eleme.sdk.model.FoodAdd;
+import com.jiabangou.eleme.sdk.model.FoodSave;
 import okhttp3.OkHttpClient;
 import org.apache.commons.lang.StringUtils;
 
@@ -25,14 +25,15 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
     private final static String FOOD_FOOD_ID = "/food/${food_id}/";
     private final static String FOOD_BATCH_GET = "/foods/batch_get/";
     private final static String FOOD = "/food/";
-
+    private final static String FOOD_BATCH_DELETE = "/foods/batch_delete/";
+    private final static String FOOD_CATEGORY_FOOD_CATEGORY_ID_FOODS = "/food_category/${food_category_id}/foods";
 
     public FoodServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
         super(client, configStorage);
     }
 
     @Override
-    public Food getById(long foodId) throws ElemeErrorException {
+    public Food getById(Long foodId) throws ElemeErrorException {
         Map<String, String> params = new HashMap<>();
         params.put("food_id", String.valueOf(foodId));
         JSONObject jsonObject = execute(HTTP_METHOD_GET, FOOD_FOOD_ID, params);
@@ -48,15 +49,55 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
     }
 
     @Override
-    public long add(FoodAdd foodAdd) throws ElemeErrorException {
-        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(foodAdd);
+    public Long add(FoodSave foodSave) throws ElemeErrorException {
+        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(foodSave);
         Map<String, String> params = new HashMap<>();
         for (String key : jsonObject.keySet()) {
             params.put(key, String.valueOf(jsonObject.get(key)));
         }
-        return execute(HTTP_METHOD_GET, FOOD, params).getLongValue("food_id");
+        return execute(HTTP_METHOD_POST, FOOD, params).getLong("food_id");
     }
 
+    @Override
+    public void update(FoodSave foodSave) throws ElemeErrorException {
+        if (foodSave.getFood_id() == null) {
+            throw new ElemeErrorException(-1, "food_id is required.");
+        }
+        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(foodSave);
+        Map<String, String> params = new HashMap<>();
+        for (Map.Entry entry : jsonObject.entrySet()) {
+            if (entry.getValue()!=null) {
+                params.put((String)entry.getKey(), String.valueOf(entry.getValue()));
+            }
+        }
+        execute(HTTP_METHOD_PUT, FOOD_FOOD_ID, params);
+    }
 
+    @Override
+    public void remove(Long foodId) throws ElemeErrorException {
+        if (foodId == null) {
+            throw new ElemeErrorException(-1, "foodId is required.");
+        }
+        Map<String, String> params = new HashMap<>();
+        params.put("food_id", foodId.toString());
+        execute(HTTP_METHOD_DELETE, FOOD_FOOD_ID, params);
+    }
 
+    @Override
+    public void removeAll(List<Long> foodIds) throws ElemeErrorException {
+        if (foodIds == null || foodIds.isEmpty()) {
+            return;
+        }
+        Map<String, String> params = new HashMap<>();
+        params.put("food_ids", StringUtils.join(foodIds.stream().map(String::valueOf).collect(toList()), ","));
+        execute(HTTP_METHOD_DELETE, FOOD_BATCH_DELETE, params);
+    }
+
+    @Override
+    public List<Food> getsByFoodCategoryId(Long foodCategoryId) throws ElemeErrorException {
+        Map<String, String> params = new HashMap<>();
+        params.put("food_category_id", String.valueOf(foodCategoryId));
+        return execute(HTTP_METHOD_GET, FOOD_CATEGORY_FOOD_CATEGORY_ID_FOODS, params).getJSONArray("foods")
+                .stream().map(obj-> TypeUtils.castToJavaBean(obj, Food.class)).collect(toList());
+    }
 }
