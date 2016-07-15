@@ -34,31 +34,6 @@ public class Food implements Serializable {
     private String image_url;
 
     /**
-     * 	是否招牌菜
-     */
-    private Short is_featured;
-
-    /**
-     * 是否配菜
-     */
-    private Short is_gum;
-
-    /**
-     * 是否新菜
-     */
-    private Short is_new;
-
-    /**
-     * 是否辣
-     */
-    private Short is_spicy;
-
-    /**
-     * 是否有效
-     */
-    private int is_valid;
-
-    /**
      * 食物评价，依次为1-5星评价的数目
      */
     private List<Integer> num_ratings;
@@ -92,6 +67,12 @@ public class Food implements Serializable {
      * 库存量
      */
     private Integer stock;
+
+    private Short is_featured;
+    private Short is_gum;
+    private Short is_new;
+    private Short is_spicy;
+    private Short is_valid = 1;
 
     /**
      * 食物排序(数值越小越靠前)
@@ -174,10 +155,6 @@ public class Food implements Serializable {
         return is_valid;
     }
 
-    public void setIs_valid(int is_valid) {
-        this.is_valid = is_valid;
-    }
-
     public List<Integer> getNum_ratings() {
         return num_ratings;
     }
@@ -249,52 +226,13 @@ public class Food implements Serializable {
 
         Food food = (Food) o;
 
-        if (is_valid != food.is_valid) return false;
-        if (description != null ? !description.equals(food.description) : food.description != null) return false;
-        if (food_id != null ? !food_id.equals(food.food_id) : food.food_id != null) return false;
-        if (food_name != null ? !food_name.equals(food.food_name) : food.food_name != null) return false;
-        if (has_activity != null ? !has_activity.equals(food.has_activity) : food.has_activity != null) return false;
-        if (image_url != null ? !image_url.equals(food.image_url) : food.image_url != null) return false;
-        if (is_featured != null ? !is_featured.equals(food.is_featured) : food.is_featured != null) return false;
-        if (is_gum != null ? !is_gum.equals(food.is_gum) : food.is_gum != null) return false;
-        if (is_new != null ? !is_new.equals(food.is_new) : food.is_new != null) return false;
-        if (is_spicy != null ? !is_spicy.equals(food.is_spicy) : food.is_spicy != null) return false;
-        if (num_ratings != null ? !num_ratings.equals(food.num_ratings) : food.num_ratings != null) return false;
-        if (price != null ? !price.equals(food.price) : food.price != null) return false;
-        if (recent_popularity != null ? !recent_popularity.equals(food.recent_popularity) : food.recent_popularity != null)
-            return false;
-        if (recent_rating != null ? !recent_rating.equals(food.recent_rating) : food.recent_rating != null)
-            return false;
-        if (restaurant_id != null ? !restaurant_id.equals(food.restaurant_id) : food.restaurant_id != null)
-            return false;
-        if (restaurant_name != null ? !restaurant_name.equals(food.restaurant_name) : food.restaurant_name != null)
-            return false;
-        if (stock != null ? !stock.equals(food.stock) : food.stock != null) return false;
-        return sort_order != null ? sort_order.equals(food.sort_order) : food.sort_order == null;
+        return food_id != null ? food_id.equals(food.food_id) : food.food_id == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = description != null ? description.hashCode() : 0;
-        result = 31 * result + (food_id != null ? food_id.hashCode() : 0);
-        result = 31 * result + (food_name != null ? food_name.hashCode() : 0);
-        result = 31 * result + (has_activity != null ? has_activity.hashCode() : 0);
-        result = 31 * result + (image_url != null ? image_url.hashCode() : 0);
-        result = 31 * result + (is_featured != null ? is_featured.hashCode() : 0);
-        result = 31 * result + (is_gum != null ? is_gum.hashCode() : 0);
-        result = 31 * result + (is_new != null ? is_new.hashCode() : 0);
-        result = 31 * result + (is_spicy != null ? is_spicy.hashCode() : 0);
-        result = 31 * result + is_valid;
-        result = 31 * result + (num_ratings != null ? num_ratings.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (recent_popularity != null ? recent_popularity.hashCode() : 0);
-        result = 31 * result + (recent_rating != null ? recent_rating.hashCode() : 0);
-        result = 31 * result + (restaurant_id != null ? restaurant_id.hashCode() : 0);
-        result = 31 * result + (restaurant_name != null ? restaurant_name.hashCode() : 0);
-        result = 31 * result + (stock != null ? stock.hashCode() : 0);
-        result = 31 * result + (sort_order != null ? sort_order.hashCode() : 0);
-        return result;
+        return food_id != null ? food_id.hashCode() : 0;
     }
 
     @Override
@@ -305,11 +243,6 @@ public class Food implements Serializable {
                 ", food_name='" + food_name + '\'' +
                 ", has_activity=" + has_activity +
                 ", image_url='" + image_url + '\'' +
-                ", is_featured=" + is_featured +
-                ", is_gum=" + is_gum +
-                ", is_new=" + is_new +
-                ", is_spicy=" + is_spicy +
-                ", is_valid=" + is_valid +
                 ", num_ratings=" + num_ratings +
                 ", price=" + price +
                 ", recent_popularity=" + recent_popularity +
@@ -317,6 +250,11 @@ public class Food implements Serializable {
                 ", restaurant_id=" + restaurant_id +
                 ", restaurant_name='" + restaurant_name + '\'' +
                 ", stock=" + stock +
+                ", is_featured=" + is_featured +
+                ", is_gum=" + is_gum +
+                ", is_new=" + is_new +
+                ", is_spicy=" + is_spicy +
+                ", is_valid=" + is_valid +
                 ", sort_order=" + sort_order +
                 '}';
     }

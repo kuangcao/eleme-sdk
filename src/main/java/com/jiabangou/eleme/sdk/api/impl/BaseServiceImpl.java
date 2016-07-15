@@ -89,7 +89,15 @@ public class BaseServiceImpl {
         if (isGetOrDelete) {
             return new RealUriAndParams(realUri + "&sig=" + signature);
         } else {
-            realParams.put("sig", signature);
+            Map<String, String> queryParams = new HashMap<String, String>() {{
+                put("consumer_key",realParams.remove("consumer_key"));
+                put("sig",signature);
+                put("timestamp", realParams.remove("timestamp"));
+            }};
+            realUri += "?" + StringUtils.join(
+                    queryParams.entrySet().stream()
+                            .map(entry->entry.getKey() + "=" + urlEncode(entry.getValue()))
+                            .collect(Collectors.toList()), "&");
             return new RealUriAndParams(realUri, realParams);
         }
     }
@@ -105,11 +113,9 @@ public class BaseServiceImpl {
             builder.delete();
         } else if (HTTP_METHOD_POST.equals(httpMethod)) {
             RequestBody requestBody = createFormBody(rp.getParams());
-            System.out.println(requestBody.toString());
             builder.post(requestBody);
         } else if (HTTP_METHOD_PUT.equals(httpMethod)) {
             RequestBody requestBody = createFormBody(rp.getParams());
-            System.out.println(requestBody.toString());
             builder.put(requestBody);
         }
         Response response = null;

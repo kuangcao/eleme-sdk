@@ -30,10 +30,16 @@ public class FoodServiceTest extends ServiceTest {
 
     @Test
     public void testAdd() throws ElemeErrorException {
-        Food food = elemeClient.getFoodService().getById(111856403L);
         FoodSave foodSave = new FoodSave();
-        foodSave.setDescription(food.getDescription());
-        foodSave.setName(food.getFood_name());
+        foodSave.setFood_category_id(10963900L);
+        foodSave.setDescription("西红柿炒蛋");
+        foodSave.setName("西红柿炒蛋");
+        foodSave.setPrice(12.00f);
+        foodSave.setMax_stock(1000);
+        foodSave.setStock(100);
+        foodSave.setSort_order(1);
+        foodSave.setPacking_fee(0.00f);
+        foodSave.setImage_hash("");
         elemeClient.getFoodService().add(foodSave);
         System.out.println(JSON.toJSON(new FoodSave()));
     }
@@ -41,15 +47,16 @@ public class FoodServiceTest extends ServiceTest {
     @Test
     public void testUpdate() throws ElemeErrorException {
         Food food = elemeClient.getFoodService().getById(111856403L);
+        System.out.println(food);
         FoodSave foodSave = new FoodSave();
-        foodSave.setDescription(food.getDescription());
+        foodSave.setDescription("测试商品打死不发货");
         foodSave.setName(food.getFood_name());
         foodSave.setFood_id(food.getFood_id());
         foodSave.setPrice(food.getPrice());
         foodSave.setMax_stock(10000);
-        foodSave.setStock(food.getStock());
+//        foodSave.setStock(food.getStock());
+//        foodSave.setSort_order(1);
         elemeClient.getFoodService().update(foodSave);
-        System.out.println(food);
     }
 
     @Test
