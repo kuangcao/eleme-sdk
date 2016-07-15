@@ -32,16 +32,18 @@ public class FoodServiceTest extends ServiceTest {
     public void testAdd() throws ElemeErrorException {
         FoodSave foodSave = new FoodSave();
         foodSave.setFood_category_id(10963900L);
-        foodSave.setDescription("西红柿炒蛋");
-        foodSave.setName("西红柿炒蛋");
+        foodSave.setDescription("西红柿炒肉");
+        foodSave.setName("西红柿炒肉");
         foodSave.setPrice(12.00f);
         foodSave.setMax_stock(1000);
         foodSave.setStock(100);
         foodSave.setSort_order(1);
         foodSave.setPacking_fee(0.00f);
-        foodSave.setImage_hash("");
-        elemeClient.getFoodService().add(foodSave);
-        System.out.println(JSON.toJSON(new FoodSave()));
+        String image_hash = elemeClient.getImageService().uploadByUrl("http://i2.xygcdn.com/login/xyglogo.jpg");
+        System.out.println(image_hash);
+        foodSave.setImage_hash(image_hash);
+        Long foodId = elemeClient.getFoodService().add(foodSave);
+        System.out.println(foodId);
     }
 
     @Test

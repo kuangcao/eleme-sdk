@@ -102,6 +102,17 @@ public class BaseServiceImpl {
         }
     }
 
+    protected JSONObject execute(String httpMethod, String url, Object obj) throws ElemeErrorException {
+        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(obj);
+        final Map<String, String> params = new HashMap<>();
+        jsonObject.entrySet().stream()
+                .filter(entry->entry.getValue() != null)
+                .forEach(entry->
+                    params.put(entry.getKey(), String.valueOf(entry.getValue()))
+                );
+        return execute(httpMethod, url, params);
+    }
+
     protected JSONObject execute(String httpMethod, String url, Map<String, String> params) throws ElemeErrorException {
 
         OkHttpClient client = new OkHttpClient();

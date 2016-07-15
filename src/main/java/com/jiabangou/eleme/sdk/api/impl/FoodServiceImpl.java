@@ -10,11 +10,12 @@ import com.jiabangou.eleme.sdk.model.FoodSave;
 import okhttp3.OkHttpClient;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 /**
  *
@@ -50,12 +51,7 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
 
     @Override
     public Long add(FoodSave foodSave) throws ElemeErrorException {
-        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(foodSave);
-        Map<String, String> params = new HashMap<>();
-        for (String key : jsonObject.keySet()) {
-            params.put(key, String.valueOf(jsonObject.get(key)));
-        }
-        return execute(HTTP_METHOD_POST, FOOD, params).getLong("food_id");
+        return execute(HTTP_METHOD_POST, FOOD, foodSave).getLong("food_id");
     }
 
     @Override
@@ -63,14 +59,7 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
         if (foodSave.getFood_id() == null) {
             throw new ElemeErrorException(-1, "food_id is required.");
         }
-        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(foodSave);
-        Map<String, String> params = new HashMap<>();
-        for (Map.Entry entry : jsonObject.entrySet()) {
-            if (entry.getValue()!=null) {
-                params.put((String)entry.getKey(), String.valueOf(entry.getValue()));
-            }
-        }
-        execute(HTTP_METHOD_PUT, FOOD_FOOD_ID, params);
+        execute(HTTP_METHOD_PUT, FOOD_FOOD_ID, foodSave);
     }
 
     @Override
@@ -95,8 +84,10 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
 
     @Override
     public List<Food> getsByFoodCategoryId(Long foodCategoryId) throws ElemeErrorException {
-        Map<String, String> params = new HashMap<>();
-        params.put("food_category_id", String.valueOf(foodCategoryId));
+
+        Map<String, String> params = new HashMap<String, String>() {{
+            put("food_category_id", String.valueOf(foodCategoryId));
+        }};
         return execute(HTTP_METHOD_GET, FOOD_CATEGORY_FOOD_CATEGORY_ID_FOODS, params).getJSONArray("foods")
                 .stream().map(obj-> TypeUtils.castToJavaBean(obj, Food.class)).collect(toList());
     }

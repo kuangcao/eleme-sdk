@@ -13,5 +13,6 @@ public interface ElemeClient {
 
     RestaurantService getRestaurantService();
 
+    ImageService getImageService();
 
 }
