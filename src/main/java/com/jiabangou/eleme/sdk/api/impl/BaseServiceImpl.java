@@ -62,7 +62,7 @@ public class BaseServiceImpl {
         Map<String, String> realParams = new HashMap<>(params.size()+2);
         realParams.put("consumer_key", configStorage.getConsumerKey());
         realParams.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
-        boolean isGetOrDelete = HTTP_METHOD_GET.equals(httpMethod) || HTTP_METHOD_DELETE.equals(httpMethod);
+        boolean isGet = HTTP_METHOD_GET.equals(httpMethod);
         for (Map.Entry<String, String> entry :params.entrySet()) {
             if (url.contains("${"+entry.getKey()+"}")) {
                 if (entry.getValue() != null) {
@@ -75,18 +75,18 @@ public class BaseServiceImpl {
         forSignatureStr.append(realUri);
         List<String> sortParams = realParams.entrySet().stream()
                 .map(entry->entry.getKey() + "=" + urlEncode(entry.getValue())).sorted().collect(Collectors.toList());
-        if (!isGetOrDelete) {
+        if (!isGet) {
             realUri = forSignatureStr.toString();
         }
 
         forSignatureStr.append("?").append(StringUtils.join(sortParams, "&"));
 
-        if (isGetOrDelete) {
+        if (isGet) {
             realUri = forSignatureStr.toString();
         }
         String signature = DigestUtils.sha1Hex(toHex(forSignatureStr.toString() + configStorage.getConsumerSecret()));
 
-        if (isGetOrDelete) {
+        if (isGet) {
             return new RealUriAndParams(realUri + "&sig=" + signature);
         } else {
             Map<String, String> queryParams = new HashMap<String, String>() {{
@@ -103,6 +103,7 @@ public class BaseServiceImpl {
     }
 
     protected JSONObject execute(String httpMethod, String url, Object obj) throws ElemeErrorException {
+
         JSONObject jsonObject = (JSONObject)JSONObject.toJSON(obj);
         final Map<String, String> params = new HashMap<>();
         jsonObject.entrySet().stream()
@@ -121,7 +122,8 @@ public class BaseServiceImpl {
         builder.url(rp.getRealUri());
 
         if (HTTP_METHOD_DELETE.equals(httpMethod)) {
-            builder.delete();
+            RequestBody requestBody = createFormBody(rp.getParams());
+            builder.delete(requestBody);
         } else if (HTTP_METHOD_POST.equals(httpMethod)) {
             RequestBody requestBody = createFormBody(rp.getParams());
             builder.post(requestBody);

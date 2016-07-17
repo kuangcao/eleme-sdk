@@ -1,5 +1,7 @@
 package com.jiabangou.eleme.sdk.api.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
@@ -7,15 +9,14 @@ import com.jiabangou.eleme.sdk.api.FoodService;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Food;
 import com.jiabangou.eleme.sdk.model.FoodSave;
+import com.jiabangou.eleme.sdk.model.TpFood;
 import okhttp3.OkHttpClient;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 /**
  *
@@ -27,7 +28,10 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
     private final static String FOOD_BATCH_GET = "/foods/batch_get/";
     private final static String FOOD = "/food/";
     private final static String FOOD_BATCH_DELETE = "/foods/batch_delete/";
+    private final static String FOODS_BATCH_UPDATE = "/foods/batch_update/";
     private final static String FOOD_CATEGORY_FOOD_CATEGORY_ID_FOODS = "/food_category/${food_category_id}/foods/";
+
+    private final static String FOODS_TP_FOOD_ID = "/foods/tp_food_id/";
 
     public FoodServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
         super(client, configStorage);
@@ -90,5 +94,51 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
         }};
         return execute(HTTP_METHOD_GET, FOOD_CATEGORY_FOOD_CATEGORY_ID_FOODS, params).getJSONArray("foods")
                 .stream().map(obj-> TypeUtils.castToJavaBean(obj, Food.class)).collect(toList());
+    }
+
+    @Override
+    public void updateAll(List<FoodSave> foods) throws ElemeErrorException {
+        if (foods == null || foods.isEmpty()) {
+            return;
+        }
+
+        List<JSONObject> jsonObject = foods.stream().map(obj-> (JSONObject)JSON.toJSON(obj)).collect(toList());
+        JSONObject requestJsonObject = new JSONObject();
+        jsonObject.forEach(j-> {
+            String key = j.getString("food_id");
+            j.remove("food_id");
+            requestJsonObject.put(key, j);
+        });
+
+        Map<String, String> params = new HashMap<String, String>() {{
+            put("foods_info", requestJsonObject.toJSONString());
+        }};
+        execute(HTTP_METHOD_PUT, FOODS_BATCH_UPDATE, params);
+    }
+
+    @Override
+    public List<TpFood> getsByTpFoodIds(List<String> tpFoodIds) throws ElemeErrorException {
+        if (tpFoodIds == null || tpFoodIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Map<String, String> params = new HashMap<>();
+        params.put("tp_food_ids", StringUtils.join(tpFoodIds.stream().map(String::valueOf).collect(toList()), ","));
+
+        JSONObject jsonObject = execute(HTTP_METHOD_GET, FOODS_TP_FOOD_ID, params).getJSONObject("food_ids");
+        List<TpFood> tpFoods = new ArrayList<TpFood>();
+        for(Map.Entry<String, Object> entry : jsonObject.entrySet()) {
+            String tpFoodId = entry.getKey();
+            JSONArray jsonArray = (JSONArray)entry.getValue();
+            for (Object object : jsonArray) {
+                JSONObject tpFoodJson = (JSONObject)object;
+                TpFood tpFood = new TpFood();
+                tpFood.setFood_id(tpFoodJson.getLong("food_id"));
+                tpFood.setRestaurant_id(tpFoodJson.getLong("restaurant_id"));
+                tpFood.setTp_food_id(tpFoodId);
+                tpFood.setTp_restaurant_id(tpFoodJson.getString("tp_restaurant_id"));
+                tpFoods.add(tpFood);
+            }
+        }
+        return tpFoods;
     }
 }

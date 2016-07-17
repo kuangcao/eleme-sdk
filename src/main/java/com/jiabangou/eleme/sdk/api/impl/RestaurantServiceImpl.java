@@ -1,6 +1,7 @@
 package com.jiabangou.eleme.sdk.api.impl;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.api.RestaurantService;
@@ -20,6 +21,7 @@ import static java.util.stream.Collectors.toList;
 public class RestaurantServiceImpl extends BaseServiceImpl implements RestaurantService {
 
     private final static String RESTAURANT_RESTAURANT_ID_MENU = "/restaurant/${restaurant_id}/menu/";
+    private final static String RESTAURANT_RESTAURANT_ID = "/restaurant/${restaurant_id}/";
 
     public RestaurantServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
         super(client, configStorage);
@@ -34,6 +36,16 @@ public class RestaurantServiceImpl extends BaseServiceImpl implements Restaurant
         JSONArray jsonArray = execute(HTTP_METHOD_GET, RESTAURANT_RESTAURANT_ID_MENU, params)
                 .getJSONArray("restaurant_menu");
         return jsonArray.stream().map(obj-> TypeUtils.castToJavaBean(obj, FoodCategoryDetail.class)).collect(toList());
+    }
+
+    public String get(Long restaurantId) throws ElemeErrorException {
+
+        JSONObject jsonObject = execute(HTTP_METHOD_GET, RESTAURANT_RESTAURANT_ID,
+                new HashMap<String, String>() {{
+                    put("restaurant_id", String.valueOf(restaurantId));
+                }})
+                .getJSONObject("restaurant");
+        return null;
     }
 
 }

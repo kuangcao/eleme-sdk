@@ -10,8 +10,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class FoodServiceTest extends ServiceTest {
 
@@ -63,13 +65,114 @@ public class FoodServiceTest extends ServiceTest {
 
     @Test
     public void testRemove() throws ElemeErrorException {
-        elemeClient.getFoodService().remove(113887406L);
+        FoodSave foodSave = new FoodSave();
+        foodSave.setFood_category_id(10963900L);
+        foodSave.setDescription("西红柿炒肉");
+        foodSave.setName("西红柿炒肉");
+        foodSave.setPrice(12.00f);
+        foodSave.setMax_stock(1000);
+        foodSave.setStock(100);
+        foodSave.setSort_order(1);
+        foodSave.setPacking_fee(0.00f);
+        String image_hash = elemeClient.getImageService().uploadByUrl("http://i2.xygcdn.com/login/xyglogo.jpg");
+        System.out.println(image_hash);
+        foodSave.setImage_hash(image_hash);
+        elemeClient.getFoodService().remove(elemeClient.getFoodService().add(foodSave));
     }
+
+    @Test
+    public void testRemoveAll() throws ElemeErrorException {
+        List<Long> foodIds = new ArrayList<>();
+        FoodSave foodSave = new FoodSave();
+        foodSave.setTp_food_id(UUID.randomUUID().toString());
+        foodSave.setFood_category_id(10963900L);
+        foodSave.setDescription("西红柿炒肉");
+        foodSave.setName("西红柿炒肉");
+        foodSave.setPrice(12.00f);
+        foodSave.setMax_stock(1000);
+        foodSave.setStock(100);
+        foodSave.setSort_order(1);
+        foodSave.setPacking_fee(0.00f);
+        String image_hash = elemeClient.getImageService().uploadByUrl("http://i2.xygcdn.com/login/xyglogo.jpg");
+        System.out.println(image_hash);
+        foodSave.setImage_hash(image_hash);
+        foodIds.add(elemeClient.getFoodService().add(foodSave));
+        foodSave = new FoodSave();
+        foodSave.setTp_food_id(UUID.randomUUID().toString());
+        foodSave.setFood_category_id(10963900L);
+        foodSave.setDescription("西红柿炒肉腊肉");
+        foodSave.setName("西红柿炒腊肉");
+        foodSave.setPrice(12.00f);
+        foodSave.setMax_stock(1000);
+        foodSave.setStock(100);
+        foodSave.setSort_order(1);
+        foodSave.setPacking_fee(0.00f);
+        foodSave.setImage_hash(image_hash);
+        foodIds.add(elemeClient.getFoodService().add(foodSave));
+        elemeClient.getFoodService().removeAll(foodIds);
+    }
+
+
+    @Test
+    public void testGetsByTpFoodId() throws ElemeErrorException {
+        List<Long> foodIds = new ArrayList<>();
+        List<String> tpFoodIds = new ArrayList<>();
+        String tpFoodId = null;
+        FoodSave foodSave = new FoodSave();
+        tpFoodId = UUID.randomUUID().toString();
+        tpFoodIds.add(tpFoodId);
+        foodSave.setTp_food_id(tpFoodId);
+
+        foodSave.setFood_category_id(10963900L);
+        foodSave.setDescription("西红柿炒肉");
+        foodSave.setName("西红柿炒肉");
+        foodSave.setPrice(12.00f);
+        foodSave.setMax_stock(1000);
+        foodSave.setStock(100);
+        foodSave.setSort_order(1);
+        foodSave.setPacking_fee(0.00f);
+        String image_hash = "80dc33c9f6f9050022892f3b6d5ae9b5cdf24707";
+        foodSave.setImage_hash(image_hash);
+        foodIds.add(elemeClient.getFoodService().add(foodSave));
+        foodSave = new FoodSave();
+        tpFoodId = UUID.randomUUID().toString();
+        tpFoodIds.add(tpFoodId);
+        foodSave.setTp_food_id(tpFoodId);
+        foodSave.setFood_category_id(10963900L);
+        foodSave.setDescription("西红柿炒肉腊肉");
+        foodSave.setName("西红柿炒腊肉");
+        foodSave.setPrice(12.00f);
+        foodSave.setMax_stock(1000);
+        foodSave.setStock(100);
+        foodSave.setSort_order(1);
+        foodSave.setPacking_fee(0.00f);
+        foodSave.setImage_hash(image_hash);
+        foodIds.add(elemeClient.getFoodService().add(foodSave));
+        System.out.println(elemeClient.getFoodService().getsByTpFoodIds(tpFoodIds));
+        elemeClient.getFoodService().removeAll(foodIds);
+    }
+
 
     @Test
     public void testGetsByFoodCategoryId() throws ElemeErrorException {
         List<Food> foods = elemeClient.getFoodService().getsByFoodCategoryId(10963900L);
         System.out.println(foods);
+    }
+
+    @Test
+    public void testUpdateAll() throws ElemeErrorException {
+        List<FoodSave> foodSaves = new ArrayList<>();
+        FoodSave foodSave = new FoodSave();
+        foodSave.setFood_id(114871106L);
+        foodSave.setName("西葫芦炒肉");
+        foodSave.setSort_order(2000);
+        foodSaves.add(foodSave);
+        foodSave = new FoodSave();
+        foodSave.setFood_id(114863204L);
+        foodSave.setName("西红石");
+        foodSave.setSort_order(0);
+        foodSaves.add(foodSave);
+        elemeClient.getFoodService().updateAll(foodSaves);
     }
 
     @Test
