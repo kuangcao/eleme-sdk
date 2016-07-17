@@ -3,6 +3,7 @@ package com.jiabangou.eleme.sdk.api;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Food;
 import com.jiabangou.eleme.sdk.model.FoodSave;
+import com.jiabangou.eleme.sdk.model.Stock;
 import com.jiabangou.eleme.sdk.model.TpFood;
 
 import java.util.List;
@@ -30,4 +31,5 @@ public interface FoodService {
 
     List<TpFood> getsByTpFoodIds(List<String> tpFoodIds) throws ElemeErrorException;
 
+    void updateStocks(List<Stock> stocks) throws ElemeErrorException;
 }

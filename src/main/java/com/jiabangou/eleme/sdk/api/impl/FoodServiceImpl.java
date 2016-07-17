@@ -9,14 +9,14 @@ import com.jiabangou.eleme.sdk.api.FoodService;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Food;
 import com.jiabangou.eleme.sdk.model.FoodSave;
+import com.jiabangou.eleme.sdk.model.Stock;
 import com.jiabangou.eleme.sdk.model.TpFood;
 import okhttp3.OkHttpClient;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 /**
  *
@@ -32,6 +32,7 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
     private final static String FOOD_CATEGORY_FOOD_CATEGORY_ID_FOODS = "/food_category/${food_category_id}/foods/";
 
     private final static String FOODS_TP_FOOD_ID = "/foods/tp_food_id/";
+    private final static String FOODS_STOCK = "/foods/stock/";
 
     public FoodServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
         super(client, configStorage);
@@ -140,5 +141,20 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
             }
         }
         return tpFoods;
+    }
+
+    @Override
+    public void updateStocks(List<Stock> stocks) throws ElemeErrorException {
+
+        Map<String, List<Stock>> stockMap = stocks.stream().collect(groupingBy(Stock::getTp_restaurant_id));
+
+        Map<String, Map<String, Integer>> stock_info = new HashMap<>();
+        for(Map.Entry<String, List<Stock>> entry : stockMap.entrySet()) {
+            stock_info.put(entry.getKey(), entry.getValue().stream().collect(toMap(Stock::getTp_food_id, stock -> stock.getStock())));
+        }
+
+        execute(HTTP_METHOD_PUT, FOODS_STOCK, new HashMap<String, String>() {{
+            put("stock_info", JSONObject.toJSONString(stock_info));
+        }});
     }
 }

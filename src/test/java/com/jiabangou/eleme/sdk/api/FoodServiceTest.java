@@ -5,6 +5,8 @@ import com.jiabangou.eleme.sdk.api.impl.ElemeClientImpl;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Food;
 import com.jiabangou.eleme.sdk.model.FoodSave;
+import com.jiabangou.eleme.sdk.model.Stock;
+import com.jiabangou.eleme.sdk.model.TpFood;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -148,7 +150,18 @@ public class FoodServiceTest extends ServiceTest {
         foodSave.setPacking_fee(0.00f);
         foodSave.setImage_hash(image_hash);
         foodIds.add(elemeClient.getFoodService().add(foodSave));
-        System.out.println(elemeClient.getFoodService().getsByTpFoodIds(tpFoodIds));
+        List<TpFood> tpFoods = elemeClient.getFoodService().getsByTpFoodIds(tpFoodIds);
+        System.out.println(tpFoods);
+
+        List<Stock> stocks = new ArrayList<>();
+        tpFoods.forEach(tpFood -> {
+            Stock stock = new Stock();
+            stock.setStock(100);
+            stock.setTp_food_id(tpFood.getTp_food_id());
+            stock.setTp_restaurant_id(tpFood.getTp_restaurant_id());
+            stocks.add(stock);
+        });
+        elemeClient.getFoodService().updateStocks(stocks);
         elemeClient.getFoodService().removeAll(foodIds);
     }
 
