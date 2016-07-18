@@ -79,7 +79,10 @@ public class FoodServiceTest extends ServiceTest {
         String image_hash = elemeClient.getImageService().uploadByUrl("http://i2.xygcdn.com/login/xyglogo.jpg");
         System.out.println(image_hash);
         foodSave.setImage_hash(image_hash);
-        elemeClient.getFoodService().remove(elemeClient.getFoodService().add(foodSave));
+        Long foodId = elemeClient.getFoodService().add(foodSave);
+        Food food = elemeClient.getFoodService().getById(foodId);
+        System.out.println(food);
+        elemeClient.getFoodService().remove(foodId);
     }
 
     @Test

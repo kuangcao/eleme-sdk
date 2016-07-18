@@ -7,6 +7,7 @@ import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.api.RestaurantService;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.FoodCategoryDetail;
+import com.jiabangou.eleme.sdk.model.Restaurant;
 import okhttp3.OkHttpClient;
 
 import java.util.HashMap;
@@ -38,14 +39,13 @@ public class RestaurantServiceImpl extends BaseServiceImpl implements Restaurant
         return jsonArray.stream().map(obj-> TypeUtils.castToJavaBean(obj, FoodCategoryDetail.class)).collect(toList());
     }
 
-    public String get(Long restaurantId) throws ElemeErrorException {
+    @Override
+    public Restaurant get(Long restaurantId) throws ElemeErrorException {
 
-        JSONObject jsonObject = execute(HTTP_METHOD_GET, RESTAURANT_RESTAURANT_ID,
+        return execute(HTTP_METHOD_GET, RESTAURANT_RESTAURANT_ID,
                 new HashMap<String, String>() {{
                     put("restaurant_id", String.valueOf(restaurantId));
-                }})
-                .getJSONObject("restaurant");
-        return null;
+                }}).getObject("restaurant", Restaurant.class);
     }
 
 }

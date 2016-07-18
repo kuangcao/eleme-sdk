@@ -22,6 +22,8 @@ public class FoodCategoryServiceImpl extends BaseServiceImpl implements FoodCate
 
     private final static String FOOD_CATEGORY = "/food_category/";
 
+    private final static String CATEGORY_FOOD_BATCH_ADD = "/category_food/batch_add/";
+
     public FoodCategoryServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
         super(client, configStorage);
     }

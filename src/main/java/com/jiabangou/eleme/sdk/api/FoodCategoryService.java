@@ -18,6 +18,7 @@ public interface FoodCategoryService {
      */
     FoodCategory getById(Long foodCategoryId) throws ElemeErrorException;
 
+
     Long add(FoodCategorySave foodCategorySave) throws ElemeErrorException;
 
     void update(FoodCategorySave foodCategorySave) throws ElemeErrorException;
