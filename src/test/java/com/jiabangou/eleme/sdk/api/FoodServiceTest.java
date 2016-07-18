@@ -35,7 +35,8 @@ public class FoodServiceTest extends ServiceTest {
     @Test
     public void testAdd() throws ElemeErrorException {
         FoodSave foodSave = new FoodSave();
-        foodSave.setFood_category_id(10963900L);
+//        foodSave.setFood_category_id(11510476L);
+        foodSave.setFood_category_id(10217122L);
         foodSave.setDescription("西红柿炒肉");
         foodSave.setName("西红柿炒肉");
         foodSave.setPrice(12.00f);
@@ -187,6 +188,7 @@ public class FoodServiceTest extends ServiceTest {
         foodSave.setFood_id(114863204L);
         foodSave.setName("西红石");
         foodSave.setSort_order(0);
+        foodSave.setFood_category_id(11510476L);
         foodSaves.add(foodSave);
         elemeClient.getFoodService().updateAll(foodSaves);
     }

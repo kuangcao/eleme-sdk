@@ -31,10 +31,14 @@ public class FoodCategoryServiceTest extends ServiceTest {
         foodCategory = foodCategoryService.getById(foodCategorySave.getFood_category_id());
         Assert.assertEquals("今日不减价",foodCategory.getName());
         System.out.println(foodCategory);
-        foodCategoryService.remove(foodCategorySave.getFood_category_id());
-        foodCategory = foodCategoryService.getById(foodCategorySave.getFood_category_id());
-        Assert.assertNull(foodCategory);
+//        foodCategoryService.remove(foodCategorySave.getFood_category_id());
+//        foodCategory = foodCategoryService.getById(foodCategorySave.getFood_category_id());
+//        Assert.assertNull(foodCategory);
     }
 
-
+    @Test
+    public void test() throws ElemeErrorException {
+        FoodCategoryService foodCategoryService = elemeClient.getFoodCategoryService();
+        System.out.println(foodCategoryService.getsByRestaurantId(62028381L));
+    }
 }

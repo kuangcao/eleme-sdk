@@ -176,11 +176,6 @@ public class Restaurant implements Serializable {
     private Integer payment_method;
 
     /**
-     * 	string	联系电话
-     */
-    private String phone;
-
-    /**
      * 	string	促销信息
      */
     private String promotion_info;
@@ -489,14 +484,6 @@ public class Restaurant implements Serializable {
         this.payment_method = payment_method;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getPromotion_info() {
         return promotion_info;
     }
@@ -511,55 +498,6 @@ public class Restaurant implements Serializable {
 
     public void setRecent_food_popularity(Integer recent_food_popularity) {
         this.recent_food_popularity = recent_food_popularity;
-    }
-
-    @Override
-    public String toString() {
-        return "Restaurant{" +
-                "address_text='" + address_text + '\'' +
-                ", agent_fee=" + agent_fee +
-                ", phone_list=" + phone_list +
-                ", busy_level=" + busy_level +
-                ", city_id=" + city_id +
-                ", city_code='" + city_code + '\'' +
-                ", close_description='" + close_description + '\'' +
-                ", deliver_amount=" + deliver_amount +
-                ", deliver_description='" + deliver_description + '\'' +
-                ", deliver_geojson='" + deliver_geojson + '\'' +
-                ", deliver_spent=" + deliver_spent +
-                ", description='" + description + '\'' +
-                ", flavors='" + flavors + '\'' +
-                ", image_url='" + image_url + '\'' +
-                ", invoice=" + invoice +
-                ", invoice_min_amount=" + invoice_min_amount +
-                ", is_bookable=" + is_bookable +
-                ", open_time_bitmap='" + open_time_bitmap + '\'' +
-                ", book_time_bitmap='" + book_time_bitmap + '\'' +
-                ", deliver_times=" + deliver_times +
-                ", is_open=" + is_open +
-                ", is_phone_hidden=" + is_phone_hidden +
-                ", is_premium=" + is_premium +
-                ", is_time_ensure=" + is_time_ensure +
-                ", time_ensure_full_description='" + time_ensure_full_description + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", mobile='" + mobile + '\'' +
-                ", no_agent_fee_total=" + no_agent_fee_total +
-                ", num_ratings=" + num_ratings +
-                ", order_mode=" + order_mode +
-                ", online_payment=" + online_payment +
-                ", payment_method=" + payment_method +
-                ", phone='" + phone + '\'' +
-                ", promotion_info='" + promotion_info + '\'' +
-                ", recent_food_popularity=" + recent_food_popularity +
-                ", restaurant_name='" + restaurant_name + '\'' +
-                ", restaurant_murl='" + restaurant_murl + '\'' +
-                ", restaurant_url='" + restaurant_url + '\'' +
-                ", serving_time=" + serving_time +
-                ", support_online=" + support_online +
-                ", service_category=" + service_category +
-                ", packing_fee=" + packing_fee +
-                '}';
     }
 
     public String getRestaurant_name() {
@@ -616,5 +554,53 @@ public class Restaurant implements Serializable {
 
     public void setPacking_fee(Float packing_fee) {
         this.packing_fee = packing_fee;
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "address_text='" + address_text + '\'' +
+                ", agent_fee=" + agent_fee +
+                ", phone_list=" + phone_list +
+                ", busy_level=" + busy_level +
+                ", city_id=" + city_id +
+                ", city_code='" + city_code + '\'' +
+                ", close_description='" + close_description + '\'' +
+                ", deliver_amount=" + deliver_amount +
+                ", deliver_description='" + deliver_description + '\'' +
+                ", deliver_geojson='" + deliver_geojson + '\'' +
+                ", deliver_spent=" + deliver_spent +
+                ", description='" + description + '\'' +
+                ", flavors='" + flavors + '\'' +
+                ", image_url='" + image_url + '\'' +
+                ", invoice=" + invoice +
+                ", invoice_min_amount=" + invoice_min_amount +
+                ", is_bookable=" + is_bookable +
+                ", open_time_bitmap='" + open_time_bitmap + '\'' +
+                ", book_time_bitmap='" + book_time_bitmap + '\'' +
+                ", deliver_times=" + deliver_times +
+                ", is_open=" + is_open +
+                ", is_phone_hidden=" + is_phone_hidden +
+                ", is_premium=" + is_premium +
+                ", is_time_ensure=" + is_time_ensure +
+                ", time_ensure_full_description='" + time_ensure_full_description + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", mobile='" + mobile + '\'' +
+                ", no_agent_fee_total=" + no_agent_fee_total +
+                ", num_ratings=" + num_ratings +
+                ", order_mode=" + order_mode +
+                ", online_payment=" + online_payment +
+                ", payment_method=" + payment_method +
+                ", promotion_info='" + promotion_info + '\'' +
+                ", recent_food_popularity=" + recent_food_popularity +
+                ", restaurant_name='" + restaurant_name + '\'' +
+                ", restaurant_murl='" + restaurant_murl + '\'' +
+                ", restaurant_url='" + restaurant_url + '\'' +
+                ", serving_time=" + serving_time +
+                ", support_online=" + support_online +
+                ", service_category=" + service_category +
+                ", packing_fee=" + packing_fee +
+                '}';
     }
 }
