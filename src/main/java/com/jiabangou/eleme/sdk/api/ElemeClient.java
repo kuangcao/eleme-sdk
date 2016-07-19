@@ -15,4 +15,6 @@ public interface ElemeClient {
 
     ImageService getImageService();
 
+    OrderService getOrderService();
+
 }

@@ -1,5 +1,6 @@
 package com.jiabangou.eleme.sdk.api.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
@@ -114,8 +115,19 @@ public class BaseServiceImpl {
         return execute(httpMethod, url, params);
     }
 
+
+    protected JSONArray executeToJSONArray(String httpMethod, String url, Map<String, String> params) throws ElemeErrorException {
+        JSONObject jsonObject = getJSONObjectResponse(httpMethod, url, params);
+        return jsonObject.getJSONArray("data");
+    }
+
     protected JSONObject execute(String httpMethod, String url, Map<String, String> params) throws ElemeErrorException {
 
+        JSONObject jsonObject = getJSONObjectResponse(httpMethod, url, params);
+        return jsonObject.getJSONObject("data");
+    }
+
+    private JSONObject getJSONObjectResponse(String httpMethod, String url, Map<String, String> params) throws ElemeErrorException {
         OkHttpClient client = new OkHttpClient();
         RealUriAndParams rp = createRealUriAndParams(httpMethod, url, params);
         Request.Builder builder = new Request.Builder();
@@ -132,19 +144,20 @@ public class BaseServiceImpl {
             builder.put(requestBody);
         }
         Response response = null;
+        JSONObject jsonObject = null;
         try {
             response = client.newCall(builder.build()).execute();
             String jsonStr = response.body().string();
 
-            JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+            jsonObject = JSONObject.parseObject(jsonStr);
             int code = jsonObject.getIntValue("code");
             if (code != 200) {
                 throw new ElemeErrorException(code, jsonObject.getString("message"), rp.getRealUri(), rp.getParams(), jsonStr);
             }
-            return jsonObject.getJSONObject("data");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return jsonObject;
     }
 
     private RequestBody createFormBody(Map<String, String> params) {

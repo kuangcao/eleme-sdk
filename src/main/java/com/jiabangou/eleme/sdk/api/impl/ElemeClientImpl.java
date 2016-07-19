@@ -15,6 +15,7 @@ public final class ElemeClientImpl implements ElemeClient {
     private RestaurantService restaurantService;
     private FoodCategoryService foodCategoryService;
     private ImageService imageService;
+    private OrderService orderService;
 
     public ElemeClientImpl(ElemeConfigStorage configStorage) {
         this.configStorage = configStorage;
@@ -65,5 +66,12 @@ public final class ElemeClientImpl implements ElemeClient {
         return imageService;
     }
 
+    @Override
+    public OrderService getOrderService() {
+        if (orderService == null) {
+            orderService = new OrderServiceImpl(getClient(), configStorage);
+        }
+        return orderService;
+    }
 
 }
