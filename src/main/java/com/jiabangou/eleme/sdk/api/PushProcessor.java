@@ -29,15 +29,15 @@ public interface PushProcessor {
     /**
      * 退单状态推送
      * @param order
-     * @param refundtatus 参考 http://merchant.openapi.eleme.io/appendix/enums.html#enum-refund-order-status
+     * @param refundStatus RefundStatus 参考 http://merchant.openapi.eleme.io/appendix/enums.html#enum-refund-order-status
      */
-    void refundOrder(Order order, Short refundtatus);
+    void refundOrder(Order order, Short refundStatus);
 
     /**
      * 订单配送状态推送
      * @param order
-     * @param statusCode
-     * @param subStatusCode
+     * @param statusCode 参考 DeliveryStatus
+     * @param subStatusCode 参考 DeliverySubStatus
      * @param name
      * @param phone
      * @param updatedAt

@@ -60,6 +60,7 @@ public class OrderDelivery implements Serializable {
 
         /**
          * 配送状态
+         * DeliveryStatus
          * @see <http://merchant.openapi.eleme.io/appendix/enums.html#enum-delivery-status>
          * @return
          */

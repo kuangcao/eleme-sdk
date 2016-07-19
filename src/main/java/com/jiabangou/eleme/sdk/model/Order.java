@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 订单对象
  * Created by freeway on 16/7/18.
  */
 public class Order implements Serializable {
@@ -62,7 +63,7 @@ public class Order implements Serializable {
      */
     private List<String> phone_list;
     /**
-     *
+     * 商户系统中的餐馆id
      */
     private String tp_restaurant_id;
     /**
