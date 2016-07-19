@@ -55,10 +55,23 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         }
         execute(HTTP_METHOD_PUT, ORDER_ELEME_ORDER_ID_STATUS, new HashMap<String, String>() {{
             put("eleme_order_id", String.valueOf(elemeOrderId));
-            put("status", String.valueOf(OrderStatus.STATUS_CODE_INVALID.getValue()));
+            put("status", String.valueOf(OrderStatus.STATUS_CODE_INVALID));
             put("reason", reason);
         }});
     }
+
+
+    @Override
+    public void confirm(Long elemeOrderId) throws ElemeErrorException {
+        if (elemeOrderId == null) {
+            throw new ElemeErrorException(-1, "eleme_order_id is required.");
+        }
+        execute(HTTP_METHOD_PUT, ORDER_ELEME_ORDER_ID_STATUS, new HashMap<String, String>() {{
+            put("eleme_order_id", String.valueOf(elemeOrderId));
+            put("status", String.valueOf(OrderStatus.STATUS_CODE_PROCESSED_AND_VALID));
+        }});
+    }
+
 
     @Override
     public List<Long> getNewOrderIds() throws ElemeErrorException {
@@ -76,7 +89,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Long> getOrderIdsByStatus(Long restaurantId, String day, Set<OrderStatus> statuses) throws ElemeErrorException {
+    public List<Long> getOrderIdsByStatus(Long restaurantId, String day, Set<Short> statuses) throws ElemeErrorException {
 
         if (restaurantId == null) {
             throw new ElemeErrorException(-1, "restaurantId is required.");
@@ -90,7 +103,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         Map<String, String> params = new HashMap<String, String>();
         params.put("restaurant_id", String.valueOf(restaurantId));
         params.put("day", day);
-        params.put("statuses", StringUtils.join(statuses.stream().map(OrderStatus::getValue).collect(Collectors.toList()), ","));
+        params.put("statuses", StringUtils.join(statuses.stream().map(String::valueOf).collect(Collectors.toList()), ","));
         return execute(HTTP_METHOD_GET, ORDERS_BATCH_GET, params).getJSONArray("order_ids")
                 .stream().map(s -> Long.valueOf(s.toString())).collect(Collectors.toList());
     }

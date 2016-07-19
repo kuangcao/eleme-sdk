@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 订单服务
  * Created by freeway on 16/7/11.
  */
 public interface OrderService {
@@ -41,11 +42,11 @@ public interface OrderService {
      *
      * @param restaurantId
      * @param day
-     * @param statuses
+     * @param statuses see OrderStatus
      * @return
      * @throws ElemeErrorException
      */
-    List<Long> getOrderIdsByStatus(Long restaurantId, String day, Set<OrderStatus> statuses) throws ElemeErrorException;
+    List<Long> getOrderIdsByStatus(Long restaurantId, String day, Set<Short> statuses) throws ElemeErrorException;
 
     /**
      * 取消订单
@@ -54,6 +55,13 @@ public interface OrderService {
      * @throws ElemeErrorException
      */
     void cancel(Long elemeOrderId, String reason) throws ElemeErrorException;
+
+    /**
+     * 确认订单
+     * @param elemeOrderId
+     * @throws ElemeErrorException
+     */
+    void confirm(Long elemeOrderId) throws ElemeErrorException;
 
     /**
      *
