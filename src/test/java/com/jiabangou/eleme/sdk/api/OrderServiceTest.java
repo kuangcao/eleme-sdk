@@ -20,7 +20,7 @@ public class OrderServiceTest extends ServiceTest {
 
     @Test
     public void testGetOrderIdsByStatus() throws ElemeErrorException {
-        Set<OrderStatus> statuses = new HashSet<OrderStatus>() {{
+        Set<Short> statuses = new HashSet<Short>() {{
             add(OrderStatus.STATUS_CODE_INVALID);
             add(OrderStatus.STATUS_CODE_PROCESSED_AND_VALID);
             add(OrderStatus.STATUS_CODE_PROCESSING);
@@ -29,13 +29,13 @@ public class OrderServiceTest extends ServiceTest {
         String day = "2016-07-08";
         System.out.println(elemeClient.getOrderService().getOrderIdsByStatus(804622L, day, statuses));
 
-        statuses = new HashSet<OrderStatus>() {{
+        statuses = new HashSet<Short>() {{
             add(OrderStatus.STATUS_CODE_INVALID);
         }};
         System.out.println(elemeClient.getOrderService().getOrderIdsByStatus(804622L, day, statuses));
 
 
-        statuses = new HashSet<OrderStatus>() {{
+        statuses = new HashSet<Short>() {{
             add(OrderStatus.STATUS_CODE_PROCESSED_AND_VALID);
         }};
         System.out.println(elemeClient.getOrderService().getOrderIdsByStatus(804622L, day, statuses));
@@ -59,7 +59,7 @@ public class OrderServiceTest extends ServiceTest {
     @Test
     public void testGetOrderDeliveriesByOrderIds() throws ElemeErrorException {
         OrderService orderService = elemeClient.getOrderService();
-        Set<OrderStatus> statuses = new HashSet<OrderStatus>() {{
+        Set<Short> statuses = new HashSet<Short>() {{
             add(OrderStatus.STATUS_CODE_INVALID);
         }};
         String day = "2016-07-08";
