@@ -472,6 +472,10 @@ public class Order implements Serializable {
             this.extra = extra;
         }
 
+        /**
+         * 超级猥琐的接口,list里面还套list, 实际上外面的list只有1条数据。
+         * @return
+         */
         public List<List<OrderItem>> getGroup() {
             return group;
         }
