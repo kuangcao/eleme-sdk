@@ -34,6 +34,7 @@ public class OrderServiceTest extends ServiceTest {
         }};
         System.out.println(elemeClient.getOrderService().getOrderIdsByStatus(804622L, day, statuses));
 
+
         statuses = new HashSet<OrderStatus>() {{
             add(OrderStatus.STATUS_CODE_PROCESSED_AND_VALID);
         }};
@@ -55,6 +56,22 @@ public class OrderServiceTest extends ServiceTest {
         elemeClient.getOrderService().disagreeRefund(100902308048030522L, "测试");
     }
 
+    @Test
+    public void testGetOrderDeliveriesByOrderIds() throws ElemeErrorException {
+        OrderService orderService = elemeClient.getOrderService();
+        Set<OrderStatus> statuses = new HashSet<OrderStatus>() {{
+            add(OrderStatus.STATUS_CODE_INVALID);
+        }};
+        String day = "2016-07-08";
+        System.out.println(orderService.getOrderDeliveriesByOrderIds(
+                orderService.getOrderIdsByStatus(804622L, day, statuses)));
+    }
+
+    @Test
+    public void testGet() throws ElemeErrorException {
+        OrderService orderService = elemeClient.getOrderService();
+        System.out.println(orderService.get(100902308048030522L));
+    }
 
 
 }

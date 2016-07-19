@@ -42,7 +42,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
 
         JSONObject jsonObject = execute(HTTP_METHOD_GET, ORDER_ELEME_ORDER_ID, new HashMap<String, String>() {{
             put("eleme_order_id", String.valueOf(elemeOrderId));
-            put("tp_id", "2");
+            put("tp_id", "1");
         }});
 
         return TypeUtils.castToJavaBean(jsonObject, Order.class);
