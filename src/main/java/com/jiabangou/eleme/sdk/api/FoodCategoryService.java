@@ -44,6 +44,13 @@ public interface FoodCategoryService {
     void remove(Long foodCategoryId) throws ElemeErrorException;
 
     /**
+     * 删除餐厅下所有的菜品分类
+     * @param restaurantId
+     * @throws ElemeErrorException
+     */
+    void removeAll(Long restaurantId) throws ElemeErrorException;
+
+    /**
      * 查询餐厅食物分类
      * 查询某一个指定餐厅的食物分类列表
      * @param restaurantId

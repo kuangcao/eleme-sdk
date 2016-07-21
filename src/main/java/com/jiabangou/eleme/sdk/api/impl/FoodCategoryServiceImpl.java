@@ -98,5 +98,13 @@ public class FoodCategoryServiceImpl extends BaseServiceImpl implements FoodCate
         execute(HTTP_METHOD_DELETE, FOOD_CATEGORY_FOOD_CATEGORY_ID, params);
     }
 
+    @Override
+    public void removeAll(Long restaurantId) throws ElemeErrorException {
+        List<FoodCategory> foodCategories = getsByRestaurantId(restaurantId);
+        for (FoodCategory foodCategory : foodCategories) {
+            remove(foodCategory.getFood_category_id());
+        }
+    }
+
 
 }

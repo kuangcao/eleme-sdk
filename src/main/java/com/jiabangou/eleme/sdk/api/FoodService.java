@@ -32,4 +32,6 @@ public interface FoodService {
     List<TpFood> getsByTpFoodIds(List<String> tpFoodIds) throws ElemeErrorException;
 
     void updateStocks(List<Stock> stocks) throws ElemeErrorException;
+
+    void updateStock(Stock stock) throws ElemeErrorException;
 }

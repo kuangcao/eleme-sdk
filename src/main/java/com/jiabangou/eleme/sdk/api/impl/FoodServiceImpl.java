@@ -40,6 +40,9 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
 
     @Override
     public Food getById(Long foodId) throws ElemeErrorException {
+        if (foodId == null) {
+            throw new ElemeErrorException(-1, "foodId is required.");
+        }
         Map<String, String> params = new HashMap<>();
         params.put("food_id", String.valueOf(foodId));
         JSONObject jsonObject = execute(HTTP_METHOD_GET, FOOD_FOOD_ID, params);
@@ -48,6 +51,9 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
 
     @Override
     public List<Food> getsByIds(List<Long> foodIds) throws ElemeErrorException {
+        if (foodIds == null || foodIds.isEmpty()) {
+            return Collections.emptyList();
+        }
         Map<String, String> params = new HashMap<>();
         params.put("food_ids", StringUtils.join(foodIds.stream().map(String::valueOf).collect(toList()), ","));
         return execute(HTTP_METHOD_GET, FOOD_BATCH_GET, params).getJSONArray("foods")
@@ -145,16 +151,24 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
 
     @Override
     public void updateStocks(List<Stock> stocks) throws ElemeErrorException {
-
+        if (stocks == null || stocks.isEmpty()) {
+            return;
+        }
         Map<String, List<Stock>> stockMap = stocks.stream().collect(groupingBy(Stock::getTp_restaurant_id));
 
-        Map<String, Map<String, Integer>> stock_info = new HashMap<>();
+        Map<String, Map<String, Integer>> stock_info = new HashMap<>(stockMap.size());
         for(Map.Entry<String, List<Stock>> entry : stockMap.entrySet()) {
-            stock_info.put(entry.getKey(), entry.getValue().stream().collect(toMap(Stock::getTp_food_id, stock -> stock.getStock())));
+            stock_info.put(entry.getKey(), entry.getValue().stream().collect(toMap(Stock::getTp_food_id, Stock::getStock)));
         }
 
         execute(HTTP_METHOD_PUT, FOODS_STOCK, new HashMap<String, String>() {{
             put("stock_info", JSONObject.toJSONString(stock_info));
         }});
     }
+
+    @Override
+    public void updateStock(Stock stock) throws ElemeErrorException {
+        updateStocks(new ArrayList<Stock>(1) {{add(stock);}});
+    }
+
 }
