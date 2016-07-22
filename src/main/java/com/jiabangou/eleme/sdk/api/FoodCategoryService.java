@@ -2,9 +2,11 @@ package com.jiabangou.eleme.sdk.api;
 
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.FoodCategory;
+import com.jiabangou.eleme.sdk.model.FoodCategoryDetailSave;
 import com.jiabangou.eleme.sdk.model.FoodCategorySave;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 食物分类服务
@@ -58,4 +60,6 @@ public interface FoodCategoryService {
      * @throws ElemeErrorException
      */
     List<FoodCategory> getsByRestaurantId(Long restaurantId) throws ElemeErrorException;
+
+    Map<Long, List<Long>> addCategoryAndFoods(List<FoodCategoryDetailSave> categoryFoods) throws ElemeErrorException;
 }

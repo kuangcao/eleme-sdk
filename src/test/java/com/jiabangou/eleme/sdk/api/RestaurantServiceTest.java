@@ -4,13 +4,15 @@ import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.FoodCategoryDetail;
 import com.jiabangou.eleme.sdk.model.Restaurant;
 import com.jiabangou.eleme.sdk.model.RestaurantSave;
+import com.jiabangou.eleme.sdk.model.RestaurantStatus;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 餐馆单元测试
- *
+ * <p>
  * Created by freeway on 16/7/14.
  */
 public class RestaurantServiceTest extends ServiceTest {
@@ -19,7 +21,7 @@ public class RestaurantServiceTest extends ServiceTest {
     public void testGetMenu() throws ElemeErrorException {
         List<FoodCategoryDetail> foodCategoryDetails = elemeClient.getRestaurantService().getMenu(62028381L);
         System.out.println(foodCategoryDetails);
-        foodCategoryDetails = elemeClient.getRestaurantService().getMenu(804622L);
+        foodCategoryDetails = elemeClient.getRestaurantService().getMenu(21388463L);
         System.out.println(foodCategoryDetails);
     }
 
@@ -63,6 +65,50 @@ public class RestaurantServiceTest extends ServiceTest {
     @Test
     public void testIsOpen() throws ElemeErrorException {
         elemeClient.getRestaurantService().setIsOpen(62028381L, true);
+        elemeClient.getRestaurantService().setIsOpen(21388463L, true);
     }
+
+    @Test
+    public void testGetProductProfile() throws ElemeErrorException {
+        System.out.println(elemeClient.getRestaurantService().getProductProfile(62028381L));
+    }
+
+    @Test
+    public void testGetStatus() throws ElemeErrorException {
+        List<Long> restaurantIds = new ArrayList<>();
+        restaurantIds = elemeClient.getRestaurantService().getIds();
+        System.out.println(restaurantIds.size());
+        System.out.println(restaurantIds);
+        List<RestaurantStatus> restaurantStatuses = elemeClient.getRestaurantService().getStatus(restaurantIds);
+        System.out.println(restaurantStatuses.size());
+        System.out.println(restaurantStatuses);
+        restaurantIds.add(620228381L);
+        elemeClient.getRestaurantService().getStatus(restaurantIds);
+    }
+
+
+    @Test
+    public void testGets() throws ElemeErrorException {
+        List<Long> restaurantIds = elemeClient.getRestaurantService().getIds();
+        for (Long restaurantId : restaurantIds) {
+            System.out.println(elemeClient.getRestaurantService().get(restaurantId));
+        }
+    }
+
+    @Test
+    public void test21388463() throws ElemeErrorException {
+        Restaurant restaurant = elemeClient.getRestaurantService().get(21388463L);
+
+        System.out.println(restaurant);
+        System.out.println(elemeClient.getRestaurantService().getMenu(21388463L));
+
+        RestaurantSave restaurantSave = new RestaurantSave();
+        String imageHash = elemeClient.getImageService().uploadByUrl("http://fuss10.elemecdn.com/0/88/add59ad9ad94bd327c94fd2ce293fjpeg.jpeg");
+        restaurantSave.setLogo_image_hash(imageHash);
+        restaurantSave.setRestaurant_id(restaurant.getId());
+        restaurantSave.setNo_agent_fee_total(59);
+        elemeClient.getRestaurantService().update(restaurantSave);
+    }
+
 
 }

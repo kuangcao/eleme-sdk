@@ -37,8 +37,11 @@ public class FoodCategoryServiceTest extends ServiceTest {
     }
 
     @Test
-    public void test() throws ElemeErrorException {
+    public void testGetsByRestaurantId() throws ElemeErrorException {
         FoodCategoryService foodCategoryService = elemeClient.getFoodCategoryService();
-        System.out.println(foodCategoryService.getsByRestaurantId(62028381L));
+
+        System.out.println(foodCategoryService.getsByRestaurantId(21388463L));
+        foodCategoryService.removeAll(21388463L);
+        System.out.println(foodCategoryService.getsByRestaurantId(21388463L));
     }
 }

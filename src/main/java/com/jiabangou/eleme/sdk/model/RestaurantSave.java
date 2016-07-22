@@ -81,7 +81,7 @@ public class RestaurantSave implements Serializable {
     /**
      * 	float	免配送费的最低消费额度
      */
-    private Float no_agent_fee_total;
+    private Integer no_agent_fee_total;
     /**
      * 餐厅是否有效（上线、下线），0为无效，1为有效
      */
@@ -211,11 +211,11 @@ public class RestaurantSave implements Serializable {
         this.invoice_min_amount = invoice_min_amount;
     }
 
-    public Float getNo_agent_fee_total() {
+    public Integer getNo_agent_fee_total() {
         return no_agent_fee_total;
     }
 
-    public void setNo_agent_fee_total(Float no_agent_fee_total) {
+    public void setNo_agent_fee_total(Integer no_agent_fee_total) {
         this.no_agent_fee_total = no_agent_fee_total;
     }
 

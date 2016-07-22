@@ -29,6 +29,7 @@ public final class ElemeClientImpl implements ElemeClient {
     private FoodCategoryService foodCategoryService;
     private ImageService imageService;
     private OrderService orderService;
+    private CommentService commentService;
     private PushProcessor pushProcessor;
 
     public ElemeClientImpl(ElemeConfigStorage configStorage) {
@@ -197,6 +198,14 @@ public final class ElemeClientImpl implements ElemeClient {
             orderService = new OrderServiceImpl(getClient(), configStorage);
         }
         return orderService;
+    }
+
+    @Override
+    public CommentService getCommentService() {
+        if (commentService == null) {
+            commentService = new CommentServiceImpl(getClient(), configStorage);
+        }
+        return commentService;
     }
 
 }

@@ -1,13 +1,13 @@
 package com.jiabangou.eleme.sdk.api.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.util.ParameterizedTypeImpl;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.api.FoodCategoryService;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
-import com.jiabangou.eleme.sdk.model.Food;
 import com.jiabangou.eleme.sdk.model.FoodCategory;
+import com.jiabangou.eleme.sdk.model.FoodCategoryDetailSave;
 import com.jiabangou.eleme.sdk.model.FoodCategorySave;
 import okhttp3.OkHttpClient;
 
@@ -18,6 +18,7 @@ import java.util.Map;
 import static java.util.stream.Collectors.toList;
 
 /**
+ * 食物分类
  * Created by freeway on 16/7/13.
  */
 public class FoodCategoryServiceImpl extends BaseServiceImpl implements FoodCategoryService {
@@ -62,11 +63,11 @@ public class FoodCategoryServiceImpl extends BaseServiceImpl implements FoodCate
         }
 
         JSONObject jsonObject = execute(HTTP_METHOD_GET, RESTAURANT_RESTAURANT_ID_FOOD_CATEGORIES,
-            new HashMap<String, String>() {{
+                new HashMap<String, String>() {{
                     put("restaurant_id", String.valueOf(restaurantId));
                 }});
         return jsonObject.getJSONArray("food_categories").stream()
-                .map(obj-> TypeUtils.castToJavaBean(obj, FoodCategory.class)).collect(toList());
+                .map(obj -> TypeUtils.castToJavaBean(obj, FoodCategory.class)).collect(toList());
     }
 
     @Override
@@ -98,12 +99,44 @@ public class FoodCategoryServiceImpl extends BaseServiceImpl implements FoodCate
         execute(HTTP_METHOD_DELETE, FOOD_CATEGORY_FOOD_CATEGORY_ID, params);
     }
 
+    private void quietRemove(Long foodCategoryId) {
+        try {
+            remove(foodCategoryId);
+        } catch (ElemeErrorException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void removeAll(Long restaurantId) throws ElemeErrorException {
         List<FoodCategory> foodCategories = getsByRestaurantId(restaurantId);
-        for (FoodCategory foodCategory : foodCategories) {
-            remove(foodCategory.getFood_category_id());
+        try {
+            foodCategories.parallelStream().map(FoodCategory::getFood_category_id).forEach(this::quietRemove);
+        } catch (RuntimeException e) {
+            if (e.getCause() instanceof ElemeErrorException) {
+                throw (ElemeErrorException) e.getCause();
+            }
+            throw e;
         }
+
+    }
+
+    @Override
+    public Map<Long, List<Long>> addCategoryAndFoods(List<FoodCategoryDetailSave> categoryFoods) throws ElemeErrorException {
+        if (categoryFoods == null || categoryFoods.isEmpty()) {
+            throw new ElemeErrorException(-1, "categoryFoods is required.");
+        }
+
+        JSONObject jsonObject = execute(HTTP_METHOD_POST, CATEGORY_FOOD_BATCH_ADD, new HashMap<String, String>() {{
+            put("category_food_info", JSONObject.toJSONString(categoryFoods, false));
+        }});
+        JSONArray jsonArray = jsonObject.getJSONArray("category_food_ids");
+        Map<Long, List<Long>> result = new HashMap<>();
+        for (Object object : jsonArray) {
+            JSONObject subJson = (JSONObject) object;
+            result.put(subJson.getLong("food_category_id"), subJson.getJSONArray("food_ids").stream().map(i -> (Long) i).collect(toList()));
+        }
+        return result;
     }
 
 

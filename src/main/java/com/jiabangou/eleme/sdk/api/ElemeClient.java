@@ -25,4 +25,6 @@ public interface ElemeClient {
 
     OrderService getOrderService();
 
+    CommentService getCommentService();
+
 }

@@ -9,6 +9,7 @@ import java.util.List;
  * Created by freeway on 16/7/17.
  */
 public class Restaurant implements Serializable {
+    private Long id;
     /**
      * 餐厅地址
      */
@@ -556,10 +557,19 @@ public class Restaurant implements Serializable {
         this.packing_fee = packing_fee;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Restaurant{" +
-                "address_text='" + address_text + '\'' +
+                "id=" + id +
+                ", address_text='" + address_text + '\'' +
                 ", agent_fee=" + agent_fee +
                 ", phone_list=" + phone_list +
                 ", busy_level=" + busy_level +

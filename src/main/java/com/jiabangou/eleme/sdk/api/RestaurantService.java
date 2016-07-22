@@ -1,9 +1,7 @@
 package com.jiabangou.eleme.sdk.api;
 
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
-import com.jiabangou.eleme.sdk.model.FoodCategoryDetail;
-import com.jiabangou.eleme.sdk.model.Restaurant;
-import com.jiabangou.eleme.sdk.model.RestaurantSave;
+import com.jiabangou.eleme.sdk.model.*;
 
 import java.util.List;
 
@@ -97,4 +95,20 @@ public interface RestaurantService {
      */
     void updateOrderMode(Long restaurantId, Short orderMode) throws ElemeErrorException;
 
+    /**
+     * 批量获取餐厅的状态
+     * 批量获取一组餐厅营业状态，有效状态，订单模式
+     * @param restaurantIds 餐厅id
+     * @return
+     * @throws ElemeErrorException
+     */
+    List<RestaurantStatus> getStatus(List<Long> restaurantIds) throws ElemeErrorException;
+
+    /**
+     * 获取餐厅的标品信息
+     * @param restaurantId
+     * @return
+     * @throws ElemeErrorException
+     */
+    RestaurantProductProfile getProductProfile(Long restaurantId) throws ElemeErrorException;
 }
