@@ -1,6 +1,7 @@
 package com.jiabangou.eleme.sdk.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 批量添加食物分类和食物的对象
@@ -11,7 +12,7 @@ public class FoodCategoryDetailSave implements Serializable {
     private Long restaurant_id;
     private String name;
     private Integer weight;
-    private Food foods;
+    private List<Food> foods;
 
     public Long getRestaurant_id() {
         return restaurant_id;
@@ -37,11 +38,11 @@ public class FoodCategoryDetailSave implements Serializable {
         this.weight = weight;
     }
 
-    public Food getFoods() {
+    public List<Food> getFoods() {
         return foods;
     }
 
-    public void setFoods(Food foods) {
+    public void setFoods(List<Food> foods) {
         this.foods = foods;
     }
 

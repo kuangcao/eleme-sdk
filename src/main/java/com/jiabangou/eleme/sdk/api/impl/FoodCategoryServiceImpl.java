@@ -134,7 +134,7 @@ public class FoodCategoryServiceImpl extends BaseServiceImpl implements FoodCate
         Map<Long, List<Long>> result = new HashMap<>();
         for (Object object : jsonArray) {
             JSONObject subJson = (JSONObject) object;
-            result.put(subJson.getLong("food_category_id"), subJson.getJSONArray("food_ids").stream().map(i -> (Long) i).collect(toList()));
+            result.put(subJson.getLong("food_category_id"), subJson.getJSONArray("food_ids").stream().map(i -> Long.valueOf(i.toString())).collect(toList()));
         }
         return result;
     }
