@@ -16,7 +16,7 @@ public interface FoodCategoryService {
 
     /**
      * 获取菜品分类型芯
-     * @see <http://merchant.openapi.eleme.io/merchant.html#api-restaurant-menu-get>
+     * http://merchant.openapi.eleme.io/merchant.html#api-restaurant-menu-get
      * @param foodCategoryId
      * @return
      * @throws ElemeErrorException

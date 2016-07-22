@@ -513,13 +513,13 @@ public class Order implements Serializable {
         private Long id;
         /**
          * 	唯一标识该订单项目的ID
-         * 	@see <http://merchant.openapi.eleme.io/appendix/enums.html#enum-entity-category>
+         * 	http://merchant.openapi.eleme.io/appendix/enums.html#enum-entity-category
          */
         private Long category_id;
 
         /**
          * 	项目类型，不同category_id下的type会不一样
-         * 	@see <http://merchant.openapi.eleme.io/appendix/enums.html#enum-restaurant-activity-type>
+         * 	http://merchant.openapi.eleme.io/appendix/enums.html#enum-restaurant-activity-type
          */
         private Long type;
         /**

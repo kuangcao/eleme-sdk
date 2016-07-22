@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * 餐厅基本信息
- * @see <http://merchant.openapi.eleme.io/appendix/models.html#model-restaurant-base>
+ * http://merchant.openapi.eleme.io/appendix/models.html#model-restaurant-base
  * Created by freeway on 16/7/17.
  */
 public class Restaurant implements Serializable {
@@ -97,13 +97,13 @@ public class Restaurant implements Serializable {
 
     /**
      * 	string	营业时间bitmap bitmap说明
-     * 	@see <http://merchant.openapi.eleme.io/appendix/models.html#api-bitmap>
+     * 	http://merchant.openapi.eleme.io/appendix/models.html#api-bitmap
      */
     private String open_time_bitmap;
 
     /**
      * 	string	预定时间bitmap bitmap说明
-     * 	@see <http://merchant.openapi.eleme.io/appendix/models.html#api-bitmap>
+     * 	http://merchant.openapi.eleme.io/appendix/models.html#api-bitmap
      */
     private String book_time_bitmap;
 

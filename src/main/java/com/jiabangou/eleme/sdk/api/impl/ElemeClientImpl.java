@@ -6,13 +6,11 @@ import com.jiabangou.eleme.sdk.model.Order;
 import com.jiabangou.eleme.sdk.model.PushAction;
 import com.jiabangou.eleme.sdk.model.ResultMessage;
 import com.jiabangou.eleme.sdk.utils.ElemeUtils;
-import com.sun.org.apache.bcel.internal.generic.PUSH;
 import okhttp3.OkHttpClient;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -62,7 +60,7 @@ public final class ElemeClientImpl implements ElemeClient {
             String eleme_order_ids = params.get("eleme_order_ids");
             List<Long> orderIds = Arrays.asList(eleme_order_ids.split(",")).stream().map(Long::valueOf).collect(toList());
             List<Order> orders = new ArrayList<>(orderIds.size());
-            for(Long orderId : orderIds) {
+            for (Long orderId : orderIds) {
                 try {
                     orders.add(this.getOrderService().get(orderId));
                 } catch (ElemeErrorException e) {

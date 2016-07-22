@@ -50,7 +50,7 @@ public class RestaurantSave implements Serializable {
 
     /**
      * 	string	营业时间bitmap bitmap说明
-     * 	@see <http://merchant.openapi.eleme.io/appendix/models.html#api-bitmap>
+     * 	http://merchant.openapi.eleme.io/appendix/models.html#api-bitmap
      */
     private String open_time;
 

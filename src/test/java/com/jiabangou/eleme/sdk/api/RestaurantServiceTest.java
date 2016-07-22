@@ -42,13 +42,13 @@ public class RestaurantServiceTest extends ServiceTest {
 
     @Test
     public void testBinding() throws ElemeErrorException {
-        elemeClient.getRestaurantService().binding(62028381L, "xQWEtysdj");
+        elemeClient.getRestaurantService().binding(62028381L, "xQWEtysdjxxx");
 
     }
 
     @Test
     public void testRebinding() throws ElemeErrorException {
-        elemeClient.getRestaurantService().rebinding(62028381L, "xQWEtysdj");
+        elemeClient.getRestaurantService().rebinding(62028381L, "xQWEtysdjx");
     }
 
     @Test

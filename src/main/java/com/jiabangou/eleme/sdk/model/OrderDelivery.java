@@ -61,7 +61,7 @@ public class OrderDelivery implements Serializable {
         /**
          * 配送状态
          * DeliveryStatus
-         * @see <http://merchant.openapi.eleme.io/appendix/enums.html#enum-delivery-status>
+         * http://merchant.openapi.eleme.io/appendix/enums.html#enum-delivery-status
          * @return
          */
         public Short getStatus_code() {
@@ -74,7 +74,7 @@ public class OrderDelivery implements Serializable {
 
         /**
          * 配送子状态(当配送状态为CANCELLED或者EXCEPTION使用)
-         * @see <http://merchant.openapi.eleme.io/appendix/enums.html#cancelledexception>
+         * http://merchant.openapi.eleme.io/appendix/enums.html#cancelledexception
          * @return
          */
         public Short getSub_status_code() {
