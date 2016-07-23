@@ -1,6 +1,7 @@
 package com.jiabangou.eleme.sdk.api;
 
 import com.jiabangou.eleme.sdk.model.ResultMessage;
+import com.oracle.tools.packager.Log;
 
 import java.util.Map;
 
@@ -9,7 +10,9 @@ import java.util.Map;
  */
 public interface ElemeClient {
 
-    void setBaiduWaimaiConfigStorage(ElemeConfigStorage configStorage);
+    void setElemeConfigStorage(ElemeConfigStorage configStorage);
+
+    void setLogListener(LogListener logListener);
 
     void setPushProcessor(PushProcessor pushProcessor);
 

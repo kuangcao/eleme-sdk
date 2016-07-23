@@ -1,8 +1,11 @@
 package com.jiabangou.eleme.sdk.api.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.TypeUtils;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
+import com.jiabangou.eleme.sdk.api.LogListener;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.utils.ElemeUtils;
 import okhttp3.*;
@@ -32,11 +35,19 @@ public class BaseServiceImpl {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseServiceImpl.class);
 
     protected ElemeConfigStorage configStorage;
+    protected LogListener logListener;
     protected OkHttpClient client;
 
-    public BaseServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
+    public BaseServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage, LogListener logListener) {
         this.configStorage = configStorage;
         this.client = client;
+        this.logListener = logListener;
+    }
+
+    private void logging(String cmd, boolean isSuccess, String request, String response) {
+        if (logListener != null) {
+            logListener.requestEvent(cmd, isSuccess, request, response);
+        }
     }
 
     protected RealUriAndParams createRealUriAndParams(String httpMethod, String url, Map<String, String> params) {
@@ -92,8 +103,9 @@ public class BaseServiceImpl {
         jsonObject.entrySet().stream()
                 .filter(entry->entry.getValue() != null)
                 .forEach(entry->
-                    params.put(entry.getKey(), String.valueOf(entry.getValue()))
+                    params.put(entry.getKey(), TypeUtils.castToString(entry.getValue()))
                 );
+
         return execute(httpMethod, url, params);
     }
 
@@ -129,12 +141,14 @@ public class BaseServiceImpl {
         JSONObject jsonObject = null;
         try {
             response = client.newCall(builder.build()).execute();
-            String jsonStr = response.body().string();
+            String responseString = response.body().string();
 
-            jsonObject = JSONObject.parseObject(jsonStr);
+            jsonObject = JSONObject.parseObject(responseString);
             int code = jsonObject.getIntValue("code");
-            if (code != 200) {
-                throw new ElemeErrorException(code, jsonObject.getString("message"), rp.getRealUri(), rp.getParams(), jsonStr);
+            boolean isSuccess = code == 200;
+            logging(url, isSuccess, JSON.toJSONString(params, true), responseString);
+            if (!isSuccess) {
+                throw new ElemeErrorException(code, jsonObject.getString("message"), rp.getRealUri(), rp.getParams(), responseString);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

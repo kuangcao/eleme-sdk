@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.api.FoodService;
+import com.jiabangou.eleme.sdk.api.LogListener;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Food;
 import com.jiabangou.eleme.sdk.model.FoodSave;
@@ -34,9 +35,10 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
     private final static String FOODS_TP_FOOD_ID = "/foods/tp_food_id/";
     private final static String FOODS_STOCK = "/foods/stock/";
 
-    public FoodServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
-        super(client, configStorage);
+    public FoodServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage, LogListener logListener) {
+        super(client, configStorage, logListener);
     }
+
 
     @Override
     public Food getById(Long foodId) throws ElemeErrorException {

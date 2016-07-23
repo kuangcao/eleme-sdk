@@ -3,6 +3,7 @@ package com.jiabangou.eleme.sdk.api.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.api.ImageService;
+import com.jiabangou.eleme.sdk.api.LogListener;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.http.HttpMethod;
@@ -18,8 +19,8 @@ public class ImageServiceImpl extends BaseServiceImpl implements ImageService {
     private final static String IMAGE_IMAGE_HASH = "/image/${image_hash}/";
     private final static String IMAGE_UPLOAD_BY_URL = "/image/upload_by_url/";
 
-    public ImageServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
-        super(client, configStorage);
+    public ImageServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage, LogListener logListener) {
+        super(client, configStorage, logListener);
     }
 
     @Override

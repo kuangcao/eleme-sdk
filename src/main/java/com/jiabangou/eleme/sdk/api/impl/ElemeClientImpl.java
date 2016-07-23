@@ -21,6 +21,7 @@ import static java.util.stream.Collectors.toList;
 public final class ElemeClientImpl implements ElemeClient {
 
     private ElemeConfigStorage configStorage;
+    private LogListener logListener;
     private OkHttpClient client;
     private FoodService foodService;
     private RestaurantService restaurantService;
@@ -36,8 +37,13 @@ public final class ElemeClientImpl implements ElemeClient {
 
 
     @Override
-    public void setBaiduWaimaiConfigStorage(ElemeConfigStorage configStorage) {
+    public void setElemeConfigStorage(ElemeConfigStorage configStorage) {
         this.configStorage = configStorage;
+    }
+
+    @Override
+    public void setLogListener(LogListener logListener) {
+        this.logListener = logListener;
     }
 
     @Override
@@ -161,7 +167,7 @@ public final class ElemeClientImpl implements ElemeClient {
     @Override
     public FoodService getFoodService() {
         if (foodService == null) {
-            foodService = new FoodServiceImpl(getClient(), configStorage);
+            foodService = new FoodServiceImpl(getClient(), configStorage, logListener);
         }
         return foodService;
     }
@@ -169,7 +175,7 @@ public final class ElemeClientImpl implements ElemeClient {
     @Override
     public FoodCategoryService getFoodCategoryService() {
         if (foodCategoryService == null) {
-            foodCategoryService = new FoodCategoryServiceImpl(getClient(), configStorage);
+            foodCategoryService = new FoodCategoryServiceImpl(getClient(), configStorage, logListener);
         }
         return foodCategoryService;
     }
@@ -177,7 +183,7 @@ public final class ElemeClientImpl implements ElemeClient {
     @Override
     public RestaurantService getRestaurantService() {
         if (restaurantService == null) {
-            restaurantService = new RestaurantServiceImpl(getClient(), configStorage);
+            restaurantService = new RestaurantServiceImpl(getClient(), configStorage, logListener);
         }
         return restaurantService;
     }
@@ -185,7 +191,7 @@ public final class ElemeClientImpl implements ElemeClient {
     @Override
     public ImageService getImageService() {
         if (imageService == null) {
-            imageService = new ImageServiceImpl(getClient(), configStorage);
+            imageService = new ImageServiceImpl(getClient(), configStorage, logListener);
         }
         return imageService;
     }
@@ -193,7 +199,7 @@ public final class ElemeClientImpl implements ElemeClient {
     @Override
     public OrderService getOrderService() {
         if (orderService == null) {
-            orderService = new OrderServiceImpl(getClient(), configStorage);
+            orderService = new OrderServiceImpl(getClient(), configStorage, logListener);
         }
         return orderService;
     }
@@ -201,7 +207,7 @@ public final class ElemeClientImpl implements ElemeClient {
     @Override
     public CommentService getCommentService() {
         if (commentService == null) {
-            commentService = new CommentServiceImpl(getClient(), configStorage);
+            commentService = new CommentServiceImpl(getClient(), configStorage, logListener);
         }
         return commentService;
     }

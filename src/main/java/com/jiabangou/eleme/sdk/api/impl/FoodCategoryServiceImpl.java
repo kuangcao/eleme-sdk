@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.api.FoodCategoryService;
+import com.jiabangou.eleme.sdk.api.LogListener;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.FoodCategory;
 import com.jiabangou.eleme.sdk.model.FoodCategoryDetailSave;
@@ -32,10 +33,10 @@ public class FoodCategoryServiceImpl extends BaseServiceImpl implements FoodCate
 
     private final static String RESTAURANT_RESTAURANT_ID_FOOD_CATEGORIES = "/restaurant/${restaurant_id}/food_categories/";
 
-
-    public FoodCategoryServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
-        super(client, configStorage);
+    public FoodCategoryServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage, LogListener logListener) {
+        super(client, configStorage, logListener);
     }
+
 
     @Override
     public FoodCategory getById(Long foodCategoryId) throws ElemeErrorException {

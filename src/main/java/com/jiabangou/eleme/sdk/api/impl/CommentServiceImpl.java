@@ -3,6 +3,7 @@ package com.jiabangou.eleme.sdk.api.impl;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.jiabangou.eleme.sdk.api.CommentService;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
+import com.jiabangou.eleme.sdk.api.LogListener;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Comment;
 import okhttp3.OkHttpClient;
@@ -22,8 +23,8 @@ public class CommentServiceImpl extends BaseServiceImpl implements CommentServic
     private final static String COMMENT_RESTAURANT_ID_COUNT = "/comment/${restaurant_id}/count/";
     private final static String COMMENT_RESTAURANT_ID_LIST_VIEW = "/comment/${restaurant_id}/list_view/";
 
-    public CommentServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
-        super(client, configStorage);
+    public CommentServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage, LogListener logListener) {
+        super(client, configStorage, logListener);
     }
 
     @Override

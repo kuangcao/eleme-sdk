@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
+import com.jiabangou.eleme.sdk.api.LogListener;
 import com.jiabangou.eleme.sdk.api.OrderService;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Order;
@@ -29,9 +30,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     private final static String ORDERS_BATCH_GET = "/orders/batch_get/";
     private final static String ORDER_DELIVERY = "/order/delivery/";
 
-    public OrderServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
-        super(client, configStorage);
+    public OrderServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage, LogListener logListener) {
+        super(client, configStorage, logListener);
     }
+
 
     @Override
     public Order get(Long elemeOrderId) throws ElemeErrorException {

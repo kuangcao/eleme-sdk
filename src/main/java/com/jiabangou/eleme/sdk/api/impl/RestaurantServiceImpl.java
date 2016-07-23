@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
+import com.jiabangou.eleme.sdk.api.LogListener;
 import com.jiabangou.eleme.sdk.api.RestaurantService;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.*;
@@ -34,8 +35,8 @@ public class RestaurantServiceImpl extends BaseServiceImpl implements Restaurant
     private final static String RESTAURANTS_BATCH_STATUS = "/restaurants/batch_status/";
     private final static String RESTAURANT_RESTAURANT_ID_PRODUCT_PROFILE = "/restaurant/${restaurant_id}/product_profile/";
 
-    public RestaurantServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage) {
-        super(client, configStorage);
+    public RestaurantServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage, LogListener logListener) {
+        super(client, configStorage, logListener);
     }
 
     @Override
@@ -105,7 +106,7 @@ public class RestaurantServiceImpl extends BaseServiceImpl implements Restaurant
     @Override
     public List<Long> getIds() throws ElemeErrorException {
         return execute(HTTP_METHOD_GET, RESTAURANT_OWN, new HashMap<>())
-                .getJSONArray("restaurants").stream().map(s -> TypeUtils.castToLong(s)).collect(Collectors.toList());
+                .getJSONArray("restaurants").stream().map(TypeUtils::castToLong).collect(Collectors.toList());
     }
 
     @Override
