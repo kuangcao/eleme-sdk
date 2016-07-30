@@ -32,9 +32,20 @@ public class ElemeErrorException extends Exception {
         this.code = error.getErrorCode();
     }
 
-
     public int getCode() {
         return code;
+    }
+
+    public String getResponseString() {
+        return responseString;
+    }
+
+    public String getRequestUrl() {
+        return requestUrl;
+    }
+
+    public Map<String, String> getRequestParams() {
+        return requestParams;
     }
 
     @Override

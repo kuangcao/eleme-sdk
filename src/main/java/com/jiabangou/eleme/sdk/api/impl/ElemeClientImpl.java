@@ -51,7 +51,7 @@ public final class ElemeClientImpl implements ElemeClient {
     }
 
     @Override
-    public ResultMessage handle(String url, Map<String, String> params) {
+    public ResultMessage pushHandle(String url, Map<String, String> params) {
         if (this.pushConsumer == null) {
             return new ResultMessage("pushConsumer does not implement");
         }

@@ -15,7 +15,7 @@ public interface ElemeClient {
 
     void setPushConsumer(PushConsumer pushConsumer);
 
-    ResultMessage handle(String url, Map<String, String> params);
+    ResultMessage pushHandle(String url, Map<String, String> params);
 
     FoodService getFoodService();
 
