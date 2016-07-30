@@ -1,6 +1,7 @@
 package com.jiabangou.eleme.sdk.api.impl;
 
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
+import com.jiabangou.eleme.sdk.api.LogListener;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -25,7 +26,9 @@ public class BaseServiceImplTest {
 //                return "87217cb263701f90316236c4df00d9352fb1da76";
                 return "5b14c2424f82e55172e3f331da577a89719ae955"; // 全聚德
             }
-        });
+        },
+                (String cmd, boolean isSuccess, String request, String response) -> {
+            });
         Map<String, String> params = new HashMap<String, String>();
         params.put("food_id", "123");
         BaseServiceImpl.RealUriAndParams rp = baseService.createRealUriAndParams(BaseServiceImpl.HTTP_METHOD_GET, "/food/${food_id}/", params);

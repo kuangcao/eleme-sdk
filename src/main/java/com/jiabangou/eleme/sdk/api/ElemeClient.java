@@ -1,7 +1,6 @@
 package com.jiabangou.eleme.sdk.api;
 
 import com.jiabangou.eleme.sdk.model.ResultMessage;
-import com.oracle.tools.packager.Log;
 
 import java.util.Map;
 
@@ -14,7 +13,7 @@ public interface ElemeClient {
 
     void setLogListener(LogListener logListener);
 
-    void setPushProcessor(PushProcessor pushProcessor);
+    void setPushConsumer(PushConsumer pushConsumer);
 
     ResultMessage handle(String url, Map<String, String> params);
 

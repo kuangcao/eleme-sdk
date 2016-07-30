@@ -29,7 +29,7 @@ public final class ElemeClientImpl implements ElemeClient {
     private ImageService imageService;
     private OrderService orderService;
     private CommentService commentService;
-    private PushProcessor pushProcessor;
+    private PushConsumer pushConsumer;
 
     public ElemeClientImpl(ElemeConfigStorage configStorage) {
         this.configStorage = configStorage;
@@ -46,15 +46,14 @@ public final class ElemeClientImpl implements ElemeClient {
         this.logListener = logListener;
     }
 
-    @Override
-    public void setPushProcessor(PushProcessor pushProcessor) {
-        this.pushProcessor = pushProcessor;
+    public void setPushConsumer(PushConsumer pushConsumer) {
+        this.pushConsumer = pushConsumer;
     }
 
     @Override
     public ResultMessage handle(String url, Map<String, String> params) {
-        if (this.pushProcessor == null) {
-            return new ResultMessage("pushProcessor does not implement");
+        if (this.pushConsumer == null) {
+            return new ResultMessage("pushConsumer does not implement");
         }
         try {
             sigCheck(url, params);
@@ -73,7 +72,7 @@ public final class ElemeClientImpl implements ElemeClient {
                     return new ResultMessage(e.getMessage());
                 }
             }
-            this.pushProcessor.newOrder(orders);
+            this.pushConsumer.newOrder(orders);
         } else if (PushAction.ORDER_STATUS_UPDATE.equals(pushAction)) {
             Long elemeOrderId = Long.valueOf(params.get("eleme_order_id"));
             String tpOrderId = params.get("tp_order_id");
@@ -81,7 +80,7 @@ public final class ElemeClientImpl implements ElemeClient {
             String extra = params.get("extra");
             try {
                 Order order = this.getOrderService().get(elemeOrderId);
-                this.pushProcessor.orderStatusUpdate(order, tpOrderId, newStatus, extra);
+                this.pushConsumer.orderStatusUpdate(order, tpOrderId, newStatus, extra);
             } catch (ElemeErrorException e) {
                 return new ResultMessage(e.getMessage());
             }
@@ -91,7 +90,7 @@ public final class ElemeClientImpl implements ElemeClient {
 
             try {
                 Order order = this.getOrderService().get(elemeOrderId);
-                this.pushProcessor.refundOrder(order, refundStatus);
+                this.pushConsumer.refundOrder(order, refundStatus);
             } catch (ElemeErrorException e) {
                 return new ResultMessage(e.getMessage());
             }
@@ -105,7 +104,7 @@ public final class ElemeClientImpl implements ElemeClient {
 
             try {
                 Order order = this.getOrderService().get(elemeOrderId);
-                this.pushProcessor.delivery(order, statusCode, subStatusCode, name, phone, updatedAt);
+                this.pushConsumer.delivery(order, statusCode, subStatusCode, name, phone, updatedAt);
             } catch (ElemeErrorException e) {
                 return new ResultMessage(e.getMessage());
             }
