@@ -50,6 +50,19 @@ public class FoodCategoryServiceTest extends ServiceTest {
     }
 
     @Test
+    public void testUpdate() throws ElemeErrorException {
+        FoodCategoryService foodCategoryService = elemeClient.getFoodCategoryService();
+        FoodCategorySave foodCategorySave = new FoodCategorySave();
+        foodCategorySave.setName("今日大减价");
+        foodCategorySave.setRestaurant_id(62028381L);
+        foodCategorySave.setWeight(1);
+        foodCategorySave.setFood_category_id(12154931L);
+        foodCategoryService.remove(foodCategorySave.getFood_category_id());
+        foodCategoryService.update(foodCategorySave);
+        System.out.print(foodCategorySave);
+    }
+
+    @Test
     public void testAddAll() throws ElemeErrorException {
         List<FoodCategoryDetailSave> cfoods = new ArrayList<>();
         List<FoodCategoryDetailSave.Food> foods = new ArrayList<>();

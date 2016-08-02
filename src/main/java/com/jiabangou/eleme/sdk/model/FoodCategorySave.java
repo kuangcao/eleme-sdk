@@ -50,7 +50,8 @@ public class FoodCategorySave implements Serializable {
     @Override
     public String toString() {
         return "FoodCategorySave{" +
-                "restaurant_id=" + restaurant_id +
+                "food_category_id=" + food_category_id +
+                ", restaurant_id=" + restaurant_id +
                 ", name='" + name + '\'' +
                 ", weight=" + weight +
                 '}';

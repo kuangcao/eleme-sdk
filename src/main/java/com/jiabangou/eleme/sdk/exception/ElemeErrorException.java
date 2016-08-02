@@ -1,10 +1,9 @@
 package com.jiabangou.eleme.sdk.exception;
 
-import com.jiabangou.eleme.sdk.model.ElemeError;
-
 import java.util.Map;
 
 /**
+ * 饿了么错误异常
  * Created by freeway on 16/7/11.
  */
 public class ElemeErrorException extends Exception {
@@ -25,11 +24,6 @@ public class ElemeErrorException extends Exception {
     public ElemeErrorException(int code, String message) {
         super(message);
         this.code = code;
-    }
-
-    public ElemeErrorException(ElemeError error) {
-        super(error.getErrorMsg());
-        this.code = error.getErrorCode();
     }
 
     public int getCode() {
