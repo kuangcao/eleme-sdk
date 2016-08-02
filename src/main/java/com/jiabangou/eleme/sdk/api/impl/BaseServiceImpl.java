@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * 基础服务
  * Created by freeway on 16/7/11.
  */
 public class BaseServiceImpl {
@@ -137,23 +138,22 @@ public class BaseServiceImpl {
             RequestBody requestBody = createFormBody(rp.getParams());
             builder.put(requestBody);
         }
-        Response response = null;
-        JSONObject jsonObject = null;
         try {
-            response = client.newCall(builder.build()).execute();
+            Response response = client.newCall(builder.build()).execute();
             String responseString = response.body().string();
 
-            jsonObject = JSONObject.parseObject(responseString);
+            JSONObject jsonObject = JSONObject.parseObject(responseString);
             int code = jsonObject.getIntValue("code");
             boolean isSuccess = code == 200;
-            logging(url, isSuccess, JSON.toJSONString(params, true), responseString);
-            if (!isSuccess) {
-                throw new ElemeErrorException(code, jsonObject.getString("message"), rp.getRealUri(), rp.getParams(), responseString);
+            logging(url, isSuccess, JSON.toJSONString(params), responseString);
+            if (isSuccess) {
+                return jsonObject;
             }
+            throw new ElemeErrorException(code, jsonObject.getString("message"),
+                    rp.getRealUri(), rp.getParams(), responseString);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return jsonObject;
     }
 
     private RequestBody createFormBody(Map<String, String> params) {
