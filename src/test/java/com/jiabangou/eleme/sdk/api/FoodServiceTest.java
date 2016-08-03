@@ -49,6 +49,7 @@ public class FoodServiceTest extends ServiceTest {
         foodSave.setImage_hash(image_hash);
         Long foodId = elemeClient.getFoodService().add(foodSave);
         System.out.println(foodId);
+        elemeClient.getFoodService().remove(foodId);
     }
 
     @Test

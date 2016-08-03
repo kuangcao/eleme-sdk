@@ -8,10 +8,7 @@ import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.api.FoodService;
 import com.jiabangou.eleme.sdk.api.LogListener;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
-import com.jiabangou.eleme.sdk.model.Food;
-import com.jiabangou.eleme.sdk.model.FoodSave;
-import com.jiabangou.eleme.sdk.model.Stock;
-import com.jiabangou.eleme.sdk.model.TpFood;
+import com.jiabangou.eleme.sdk.model.*;
 import okhttp3.OkHttpClient;
 import org.apache.commons.lang.StringUtils;
 
@@ -47,8 +44,15 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService {
         }
         Map<String, String> params = new HashMap<>();
         params.put("food_id", String.valueOf(foodId));
-        JSONObject jsonObject = execute(HTTP_METHOD_GET, FOOD_FOOD_ID, params);
-        return jsonObject.getObject("food", Food.class);
+        try {
+            return execute(HTTP_METHOD_GET, FOOD_FOOD_ID, params).getObject("food", Food.class);
+        } catch (ElemeErrorException e) {
+            if (ElemeErrorCode.INVALID_FOOD.getCode() == e.getCode() ||
+                    ElemeErrorCode.PERMISSION_DENIED.getCode() == e.getCode()) {
+                return null;
+            }
+            throw e;
+        }
     }
 
     @Override

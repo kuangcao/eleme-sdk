@@ -7,6 +7,7 @@ import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
 import com.jiabangou.eleme.sdk.api.FoodCategoryService;
 import com.jiabangou.eleme.sdk.api.LogListener;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
+import com.jiabangou.eleme.sdk.model.ElemeErrorCode;
 import com.jiabangou.eleme.sdk.model.FoodCategory;
 import com.jiabangou.eleme.sdk.model.FoodCategoryDetailSave;
 import com.jiabangou.eleme.sdk.model.FoodCategorySave;
@@ -50,7 +51,8 @@ public class FoodCategoryServiceImpl extends BaseServiceImpl implements FoodCate
             return jsonObject.getObject("food_category", FoodCategory.class);
         } catch (ElemeErrorException e) {
             //没有这个分类
-            if (e.getCode() == 1019) {
+            if (ElemeErrorCode.INVALID_FOOD_CATEGORY.getCode() == e.getCode() ||
+                    ElemeErrorCode.PERMISSION_DENIED.getCode() == e.getCode()) {
                 return null;
             }
             throw e;

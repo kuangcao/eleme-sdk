@@ -1,9 +1,7 @@
 package com.jiabangou.eleme.sdk.api;
 
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
-import com.jiabangou.eleme.sdk.model.FoodCategory;
-import com.jiabangou.eleme.sdk.model.FoodCategoryDetailSave;
-import com.jiabangou.eleme.sdk.model.FoodCategorySave;
+import com.jiabangou.eleme.sdk.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -35,9 +33,25 @@ public class FoodCategoryServiceTest extends ServiceTest {
         foodCategory = foodCategoryService.getById(foodCategorySave.getFood_category_id());
         Assert.assertEquals("今日不减价",foodCategory.getName());
         System.out.println(foodCategory);
-//        foodCategoryService.remove(foodCategorySave.getFood_category_id());
-//        foodCategory = foodCategoryService.getById(foodCategorySave.getFood_category_id());
-//        Assert.assertNull(foodCategory);
+
+        FoodSave foodSave = new FoodSave();
+        foodSave.setFood_category_id(foodCategory.getFood_category_id());
+        foodSave.setDescription("西红柿炒肉");
+        foodSave.setName("西红柿炒肉");
+        foodSave.setPrice(12.00f);
+        foodSave.setMax_stock(1000);
+        foodSave.setStock(100);
+        foodSave.setSort_order(1);
+        foodSave.setPacking_fee(0.00f);
+        String image_hash = elemeClient.getImageService().uploadByUrl("http://i2.xygcdn.com/login/xyglogo.jpg");
+        System.out.println(image_hash);
+        foodSave.setImage_hash(image_hash);
+        Long foodId = elemeClient.getFoodService().add(foodSave);
+        foodCategoryService.remove(foodCategorySave.getFood_category_id());
+        foodCategory = foodCategoryService.getById(foodCategorySave.getFood_category_id());
+        Assert.assertNull(foodCategory);
+        Food food = elemeClient.getFoodService().getById(foodId);
+        Assert.assertNull(food);
     }
 
     @Test
@@ -50,7 +64,7 @@ public class FoodCategoryServiceTest extends ServiceTest {
     }
 
     @Test
-    public void testUpdate() throws ElemeErrorException {
+    public void testUpdateForException() throws ElemeErrorException {
         FoodCategoryService foodCategoryService = elemeClient.getFoodCategoryService();
         FoodCategorySave foodCategorySave = new FoodCategorySave();
         foodCategorySave.setName("今日大减价");
@@ -58,8 +72,11 @@ public class FoodCategoryServiceTest extends ServiceTest {
         foodCategorySave.setWeight(1);
         foodCategorySave.setFood_category_id(12154931L);
         foodCategoryService.remove(foodCategorySave.getFood_category_id());
-        foodCategoryService.update(foodCategorySave);
-        System.out.print(foodCategorySave);
+        try {
+            foodCategoryService.update(foodCategorySave);
+        } catch (ElemeErrorException e) {
+            Assert.assertEquals(e.getCode(), ElemeErrorCode.INVALID_FOOD_CATEGORY.getCode());
+        }
     }
 
     @Test
@@ -142,5 +159,22 @@ public class FoodCategoryServiceTest extends ServiceTest {
         cfoods.add(foodCategoryFoods);
 
         System.out.println(elemeClient.getFoodCategoryService().addCategoryAndFoods(cfoods));
+    }
+
+
+    @Test
+    public void testGet() throws ElemeErrorException {
+        FoodCategoryService foodCategoryService = elemeClient.getFoodCategoryService();
+        FoodCategorySave foodCategorySave = new FoodCategorySave();
+        foodCategorySave.setName("今日大减价");
+        foodCategorySave.setRestaurant_id(62028381L);
+        foodCategorySave.setWeight(1);
+        foodCategorySave.setFood_category_id(foodCategoryService.add(foodCategorySave));
+        System.out.println(foodCategorySave);
+        foodCategoryService.remove(foodCategorySave.getFood_category_id());
+        FoodCategory foodCategory = foodCategoryService.getById(foodCategorySave.getFood_category_id());
+        System.out.println(foodCategory);
+        foodCategory = foodCategoryService.getById(1234L);
+        System.out.println(foodCategory);
     }
 }

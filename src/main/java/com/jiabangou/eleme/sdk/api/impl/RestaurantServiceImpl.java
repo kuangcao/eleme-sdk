@@ -55,12 +55,19 @@ public class RestaurantServiceImpl extends BaseServiceImpl implements Restaurant
         if (restaurantId == null) {
             throw new ElemeErrorException(-1, "restaurant_id is required.");
         }
-        Restaurant restaurant = execute(HTTP_METHOD_GET, RESTAURANT_RESTAURANT_ID,
-                new HashMap<String, String>() {{
-                    put("restaurant_id", String.valueOf(restaurantId));
-                }}).getObject("restaurant", Restaurant.class);
-        restaurant.setId(restaurantId);
-        return restaurant;
+        try {
+            Restaurant restaurant = execute(HTTP_METHOD_GET, RESTAURANT_RESTAURANT_ID,
+                    new HashMap<String, String>() {{
+                        put("restaurant_id", String.valueOf(restaurantId));
+                    }}).getObject("restaurant", Restaurant.class);
+            restaurant.setId(restaurantId);
+            return restaurant;
+        } catch (ElemeErrorException e) {
+            if (ElemeErrorCode.PERMISSION_DENIED.getCode() == e.getCode()) {
+                return null;
+            }
+            throw e;
+        }
     }
 
     @Override

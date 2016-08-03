@@ -31,15 +31,15 @@ public enum ElemeErrorCode implements Serializable {
 
     ;
 
-    private Integer code;
+    private int code;
     private String msg;
 
-    ElemeErrorCode(Integer code, String msg) {
+    ElemeErrorCode(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public Integer getCode() {
+    public int getCode() {
         return code;
     }
 
