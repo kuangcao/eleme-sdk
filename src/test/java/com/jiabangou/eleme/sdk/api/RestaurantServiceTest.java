@@ -27,10 +27,11 @@ public class RestaurantServiceTest extends ServiceTest {
 
     @Test
     public void testGetUpdate() throws ElemeErrorException {
-        Restaurant restaurant = elemeClient.getRestaurantService().get(62028381L);
+        Restaurant restaurant = elemeClient.getRestaurantService().get(1199500L);
         System.out.println(restaurant);
         RestaurantSave restaurantSave = new RestaurantSave();
-        restaurantSave.setRestaurant_id(62028381L);
+        restaurantSave.setRestaurant_id(1199500L);
+        restaurantSave.setAgent_fee(1);
         restaurantSave.setPacking_fee(20f);
         restaurantSave.setGeo(restaurant.getLongitude() + "," + restaurant.getLatitude());
         restaurantSave.setDescription("永不开张的店");
@@ -53,8 +54,8 @@ public class RestaurantServiceTest extends ServiceTest {
 
     @Test
     public void testGetIdByTpRestaurantId() throws ElemeErrorException {
-        System.out.println(elemeClient.getRestaurantService().getIdByTpRestaurantId("xQWEtysdj"));
-        System.out.println(elemeClient.getRestaurantService().getIdByTpRestaurantId("xQWEtysdsj"));
+        System.out.println(elemeClient.getRestaurantService().getIdByTpRestaurantId("1202"));
+//        System.out.println(elemeClient.getRestaurantService().getIdByTpRestaurantId("xQWEtysdsj"));
     }
 
     @Test

@@ -1,7 +1,6 @@
 package com.jiabangou.eleme.sdk.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by freeway on 16/7/18.
@@ -22,7 +21,7 @@ public class RestaurantSave implements Serializable {
     /**
      * 配送费
      */
-    private Float agent_fee;
+    private Integer agent_fee;
 
     /**
      * 	string	关闭原因
@@ -115,11 +114,11 @@ public class RestaurantSave implements Serializable {
         this.geo = geo;
     }
 
-    public Float getAgent_fee() {
+    public Integer getAgent_fee() {
         return agent_fee;
     }
 
-    public void setAgent_fee(Float agent_fee) {
+    public void setAgent_fee(Integer agent_fee) {
         this.agent_fee = agent_fee;
     }
 
