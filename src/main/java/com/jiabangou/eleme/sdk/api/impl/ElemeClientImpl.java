@@ -55,11 +55,11 @@ public final class ElemeClientImpl implements ElemeClient {
         if (this.pushConsumer == null) {
             return new ResultMessage("pushConsumer does not implement");
         }
-        try {
-            sigCheck(url, params);
-        } catch (Exception e) {
-            return new ResultMessage(e.getMessage());
-        }
+//        try {
+//            sigCheck(url, params);
+//        } catch (Exception e) {
+//            return new ResultMessage(e.getMessage());
+//        }
         String pushAction = params.get("push_action");
         if (PushAction.NEW_ORDER.equals(pushAction)) {
             String eleme_order_ids = params.get("eleme_order_ids");
