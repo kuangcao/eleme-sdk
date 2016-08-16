@@ -55,11 +55,11 @@ public final class ElemeClientImpl implements ElemeClient {
         if (this.pushConsumer == null) {
             return new ResultMessage("pushConsumer does not implement");
         }
-//        try {
-//            sigCheck(url, params);
-//        } catch (Exception e) {
-//            return new ResultMessage(e.getMessage());
-//        }
+        try {
+            ElemeUtils.sigCheck(url, params, configStorage.getConsumerKey(), configStorage.getConsumerSecret());
+        } catch (Exception e) {
+            return new ResultMessage(e.getMessage());
+        }
         String pushAction = params.get("push_action");
         if (PushAction.NEW_ORDER.equals(pushAction)) {
             String eleme_order_ids = params.get("eleme_order_ids");
@@ -110,50 +110,6 @@ public final class ElemeClientImpl implements ElemeClient {
             }
         }
         return ResultMessage.buildOk();
-    }
-
-    protected void sigCheck(String url, Map<String, String> params) {
-        if (!url.contains("?")) {
-            throw new RuntimeException("timestamp, sig, consumer_key is required");
-        }
-        String noQueryUrl = url.substring(0, url.indexOf("?"));
-        String queryString = url.substring(url.indexOf("?") + 1, url.length());
-        Map<String, String> signParams = new HashMap<>();
-        String sig = null;
-        List<String> queryParts = Arrays.asList(StringUtils.split(queryString, "&"));
-        for (String queryPart : queryParts) {
-            String[] kv = queryPart.split("=");
-            if ("sig".equals(kv[0])) {
-                sig = kv[1];
-            } else {
-                signParams.put(kv[0], kv[1]);
-            }
-        }
-        if (sig == null) {
-            throw new RuntimeException("sig is required");
-        }
-        if (!signParams.containsKey("timestamp")) {
-            throw new RuntimeException("timestamp is required");
-        }
-        if (!signParams.containsKey("consumer_key")) {
-            throw new RuntimeException("consumer_key is required");
-        }
-        if (configStorage.getConsumerKey().equals(signParams.get("consumer_key"))) {
-            throw new RuntimeException("consumer_key is incorrect");
-        }
-        signParams.putAll(params);
-
-        List<String> sortParams = signParams.entrySet().stream()
-                .map(entry -> entry.getKey() + "=" +
-                        ElemeUtils.urlEncode(entry.getValue())).sorted().collect(toList());
-
-        String signature = DigestUtils.sha1Hex(ElemeUtils.toHex(noQueryUrl + "?" +
-                StringUtils.join(sortParams, "&")
-                + configStorage.getConsumerSecret()));
-
-        if (!signature.equals(sig)) {
-            throw new RuntimeException("sig is incorrect");
-        }
     }
 
     private OkHttpClient getClient() {
