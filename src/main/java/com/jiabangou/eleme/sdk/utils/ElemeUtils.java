@@ -47,7 +47,7 @@ public class ElemeUtils {
         if (!signParams.containsKey("consumer_key")) {
             throw new RuntimeException("consumer_key is required");
         }
-        if (consumerKey.equals(signParams.get("consumer_key"))) {
+        if (!consumerKey.equals(signParams.get("consumer_key"))) {
             throw new RuntimeException("consumer_key is incorrect");
         }
         List<String> sortParams = signParams.entrySet().stream()
