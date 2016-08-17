@@ -145,7 +145,7 @@ public class BaseServiceImpl {
             JSONObject jsonObject = JSONObject.parseObject(responseString);
             int code = jsonObject.getIntValue("code");
             boolean isSuccess = code == 200;
-            logging(url, isSuccess, JSON.toJSONString(params), responseString);
+            logging(url, isSuccess, httpMethod + " " + rp.getRealUri() + "\nBody:" + JSON.toJSONString(params), responseString);
             if (isSuccess) {
                 return jsonObject;
             }
