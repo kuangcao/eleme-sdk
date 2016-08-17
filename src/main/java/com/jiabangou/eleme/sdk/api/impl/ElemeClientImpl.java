@@ -5,6 +5,7 @@ import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Order;
 import com.jiabangou.eleme.sdk.model.PushAction;
 import com.jiabangou.eleme.sdk.model.ResultMessage;
+import com.jiabangou.eleme.sdk.utils.ElemeUtils;
 import okhttp3.OkHttpClient;
 
 import java.util.ArrayList;
@@ -55,11 +56,11 @@ public final class ElemeClientImpl implements ElemeClient {
         if (this.pushConsumer == null) {
             return new ResultMessage("pushConsumer does not implement");
         }
-//        try {
-//            ElemeUtils.sigCheck(url, params, configStorage.getConsumerKey(), configStorage.getConsumerSecret());
-//        } catch (Exception e) {
-//            return new ResultMessage(e.getMessage());
-//        }
+        try {
+            ElemeUtils.sigCheck(url, params, configStorage.getConsumerKey(), configStorage.getConsumerSecret());
+        } catch (Exception e) {
+            return new ResultMessage(e.getMessage());
+        }
         String pushAction = params.get("push_action");
         if (PushAction.NEW_ORDER.equals(pushAction)) {
             String eleme_order_ids = params.get("eleme_order_ids");
