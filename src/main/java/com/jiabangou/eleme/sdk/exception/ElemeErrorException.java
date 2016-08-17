@@ -8,6 +8,11 @@ import java.util.Map;
  */
 public class ElemeErrorException extends Exception {
 
+    /**
+     * 商店已存在
+     */
+    public static final int RESTAURANT_HAS_BEEN_BINDED = 1004;
+
     protected int code;
     protected String responseString;
     protected String requestUrl;
