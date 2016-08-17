@@ -65,15 +65,16 @@ public final class ElemeClientImpl implements ElemeClient {
         if (PushAction.NEW_ORDER.equals(pushAction)) {
             String eleme_order_ids = params.get("eleme_order_ids");
             List<Long> orderIds = Arrays.asList(eleme_order_ids.split(",")).stream().map(Long::valueOf).collect(toList());
-            List<Order> orders = new ArrayList<>(orderIds.size());
-            for (Long orderId : orderIds) {
-                try {
+            try {
+                List<Order> orders = new ArrayList<>(orderIds.size());
+                for (Long orderId : orderIds) {
                     orders.add(this.getOrderService().get(orderId));
-                } catch (ElemeErrorException e) {
-                    return new ResultMessage(e.getMessage());
                 }
+                this.pushConsumer.newOrder(orders);
+            } catch (ElemeErrorException e) {
+                logging(e.getRequestUrl(), false, e.getRequestParams().toString(), e.getResponseString());
+                return new ResultMessage(e.getMessage());
             }
-            this.pushConsumer.newOrder(orders);
         } else if (PushAction.ORDER_STATUS_UPDATE.equals(pushAction)) {
             Long elemeOrderId = Long.valueOf(params.get("eleme_order_id"));
             String tpOrderId = params.get("tp_order_id");
@@ -83,6 +84,7 @@ public final class ElemeClientImpl implements ElemeClient {
                 Order order = this.getOrderService().get(elemeOrderId);
                 this.pushConsumer.orderStatusUpdate(order, tpOrderId, newStatus, extra);
             } catch (ElemeErrorException e) {
+                logging(e.getRequestUrl(), false, e.getRequestParams().toString(), e.getResponseString());
                 return new ResultMessage(e.getMessage());
             }
         } else if (PushAction.REFUND_ORDER.equals(pushAction)) {
@@ -93,6 +95,7 @@ public final class ElemeClientImpl implements ElemeClient {
                 Order order = this.getOrderService().get(elemeOrderId);
                 this.pushConsumer.refundOrder(order, refundStatus);
             } catch (ElemeErrorException e) {
+                logging(e.getRequestUrl(), false, e.getRequestParams().toString(), e.getResponseString());
                 return new ResultMessage(e.getMessage());
             }
         } else if (PushAction.DELIVERY.equals(pushAction)) {
@@ -107,10 +110,17 @@ public final class ElemeClientImpl implements ElemeClient {
                 Order order = this.getOrderService().get(elemeOrderId);
                 this.pushConsumer.delivery(order, statusCode, subStatusCode, name, phone, updatedAt);
             } catch (ElemeErrorException e) {
+                logging(e.getRequestUrl(), false, e.getRequestParams().toString(), e.getResponseString());
                 return new ResultMessage(e.getMessage());
             }
         }
         return ResultMessage.buildOk();
+    }
+
+    private void logging(String cmd, boolean isSuccess, String request, String response) {
+        if (logListener != null) {
+            logListener.requestEvent(cmd, isSuccess, request, response);
+        }
     }
 
     private OkHttpClient getClient() {
