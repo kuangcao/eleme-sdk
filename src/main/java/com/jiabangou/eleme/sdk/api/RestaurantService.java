@@ -111,4 +111,11 @@ public interface RestaurantService {
      * @throws ElemeErrorException
      */
     RestaurantProductProfile getProductProfile(Long restaurantId) throws ElemeErrorException;
+
+    /**
+     * 设置餐厅配送信息
+     * @param restaurantGeo
+     * @throws ElemeErrorException
+     */
+    void restaurantGeo(Long restaurantId, List<RestaurantGeo> restaurantGeo) throws ElemeErrorException;
 }

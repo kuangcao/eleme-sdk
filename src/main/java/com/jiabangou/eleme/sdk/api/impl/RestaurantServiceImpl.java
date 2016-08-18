@@ -11,10 +11,7 @@ import com.jiabangou.eleme.sdk.model.*;
 import okhttp3.OkHttpClient;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -34,6 +31,7 @@ public class RestaurantServiceImpl extends BaseServiceImpl implements Restaurant
     private final static String RESTAURANT_RESTAURANT_ID_ORDER_MODE = "/restaurant/${restaurant_id}/order_mode/";
     private final static String RESTAURANTS_BATCH_STATUS = "/restaurants/batch_status/";
     private final static String RESTAURANT_RESTAURANT_ID_PRODUCT_PROFILE = "/restaurant/${restaurant_id}/product_profile/";
+    private final static String RESTAURANT_RESTAURANT_ID_GEO = "/restaurant/${restaurant_id}/geo/";
 
     public RestaurantServiceImpl(OkHttpClient client, ElemeConfigStorage configStorage, LogListener logListener) {
         super(client, configStorage, logListener);
@@ -184,4 +182,12 @@ public class RestaurantServiceImpl extends BaseServiceImpl implements Restaurant
         }
     }
 
+    @Override
+    public void restaurantGeo(Long restaurantId, List<RestaurantGeo> restaurantGeo) throws ElemeErrorException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("restaurant_id", String.valueOf(restaurantId));
+        params.put("geo_json", JSONObject.toJSONString(restaurantGeo));
+        execute(HTTP_METHOD_PUT, RESTAURANT_RESTAURANT_ID_GEO, params);
+    }
 }
