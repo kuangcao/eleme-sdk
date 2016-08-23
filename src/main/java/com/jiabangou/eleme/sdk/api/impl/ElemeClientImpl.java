@@ -7,6 +7,7 @@ import com.jiabangou.eleme.sdk.model.PushAction;
 import com.jiabangou.eleme.sdk.model.ResultMessage;
 import com.jiabangou.eleme.sdk.utils.ElemeUtils;
 import okhttp3.OkHttpClient;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,7 +102,7 @@ public final class ElemeClientImpl implements ElemeClient {
         } else if (PushAction.DELIVERY.equals(pushAction)) {
             Long elemeOrderId = Long.valueOf(params.get("eleme_order_id"));
             Short statusCode = Short.valueOf(params.get("status_code"));
-            Short subStatusCode = Short.valueOf(params.get("sub_status_code"));
+            Short subStatusCode = StringUtils.isNotBlank(params.get("sub_status_code")) ? Short.valueOf(params.get("sub_status_code")) : 0;
             String name = params.get("name");
             String phone = params.get("phone");
             Long updatedAt = Long.valueOf(params.get("update_at"));
