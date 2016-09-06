@@ -123,7 +123,6 @@ public class BaseServiceImpl {
     }
 
     private JSONObject getJSONObjectResponse(String httpMethod, String url, Map<String, String> params) throws ElemeErrorException {
-        OkHttpClient client = new OkHttpClient();
         RealUriAndParams rp = createRealUriAndParams(httpMethod, url, params);
         Request.Builder builder = new Request.Builder();
         builder.url(rp.getRealUri());
