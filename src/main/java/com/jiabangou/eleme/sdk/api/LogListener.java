@@ -5,6 +5,6 @@ package com.jiabangou.eleme.sdk.api;
  */
 public interface LogListener {
 
-    void requestEvent(String cmd, boolean isSuccess, String request, String response);
+    void requestEvent(String cmd, String method, boolean isSuccess, String request, String response);
 
 }

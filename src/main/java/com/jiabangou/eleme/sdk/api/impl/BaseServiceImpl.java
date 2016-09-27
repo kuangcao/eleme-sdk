@@ -45,9 +45,9 @@ public class BaseServiceImpl {
         this.logListener = logListener;
     }
 
-    private void logging(String cmd, boolean isSuccess, String request, String response) {
+    private void logging(String cmd, String method, boolean isSuccess, String request, String response) {
         if (logListener != null) {
-            logListener.requestEvent(cmd, isSuccess, request, response);
+            logListener.requestEvent(cmd, method, isSuccess, request, response);
         }
     }
 
@@ -144,7 +144,7 @@ public class BaseServiceImpl {
             JSONObject jsonObject = JSONObject.parseObject(responseString);
             int code = jsonObject.getIntValue("code");
             boolean isSuccess = code == 200;
-            logging(url, isSuccess, httpMethod + " " + rp.getRealUri() + "\nBody:" + JSON.toJSONString(params), responseString);
+            logging(url, httpMethod, isSuccess,  rp.getRealUri() + "\nBody:" + JSON.toJSONString(params), responseString);
             if (isSuccess) {
                 return jsonObject;
             }
