@@ -54,9 +54,9 @@ public interface FoodCategoryService {
 
     /**
      * 查询餐厅食物分类
-     * 查询某一个指定餐厅的食物分类列表
-     * @param restaurantId
-     * @return
+     * http://merchant.openapi.eleme.io/merchant.html#api-restaurant-food-category-list
+     * @param restaurantId 餐厅id
+     * @return 分类列表
      * @throws ElemeErrorException
      */
     List<FoodCategory> getsByRestaurantId(Long restaurantId) throws ElemeErrorException;
