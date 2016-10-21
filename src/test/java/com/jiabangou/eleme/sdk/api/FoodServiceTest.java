@@ -1,14 +1,11 @@
 package com.jiabangou.eleme.sdk.api;
 
-import com.alibaba.fastjson.JSON;
-import com.jiabangou.eleme.sdk.api.impl.ElemeClientImpl;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Food;
 import com.jiabangou.eleme.sdk.model.FoodSave;
 import com.jiabangou.eleme.sdk.model.Stock;
 import com.jiabangou.eleme.sdk.model.TpFood;
 import org.apache.commons.codec.binary.Hex;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -22,7 +19,7 @@ public class FoodServiceTest extends ServiceTest {
 
     @Test
     public void testGetById() throws ElemeErrorException {
-        Food food = elemeClient.getFoodService().getById(111856403L);
+        Food food = elemeClient.getFoodService().getById(131168182L);
         System.out.println(food);
     }
 
@@ -54,37 +51,59 @@ public class FoodServiceTest extends ServiceTest {
 
     @Test
     public void testUpdate() throws ElemeErrorException {
-        Food food = elemeClient.getFoodService().getById(111856403L);
+        Food food = elemeClient.getFoodService().getById(127999351L);
         System.out.println(food);
         FoodSave foodSave = new FoodSave();
-        foodSave.setDescription("测试商品打死不发货");
-        foodSave.setName(food.getFood_name());
         foodSave.setFood_id(food.getFood_id());
-        foodSave.setPrice(food.getPrice());
-        foodSave.setMax_stock(10000);
-//        foodSave.setStock(food.getStock());
+//        String descOld = "@#!!@#$%^&*()_^…… SGFDSF＠＃￥＠＃￥＃％￥……％＆……×＆（×（））（";
+//        String desc = descOld.replace("。", ".").replace("——", "-").
+//                replace("、", " ").replace("【", " ").replace("】", " ").replace("《", " ").
+//                replace("》", " ").replace("‘", " ").replace("’", " ").replace("“", " ").
+//                replace("”", " ").replace("×", "*").replace("……", "^").replace("·", " ").replace("^", " ");
+//        //
+//        String descNew = ToDBC(desc);
+        //@#!!@#$% &*()_   SGFDSF@#￥@#￥#%￥ %& *&(*())(
+//        foodSave.setDescription("~!@#$%^&():?><,./';:'");
+//        foodSave.setName(food.getFood_name());
+//        foodSave.setPrice(food.getPrice());
+        foodSave.setName("你好我是滴减肥代理商空间反垄断");
+        foodSave.setMax_stock(400);
+        foodSave.setStock(14);
 //        foodSave.setSort_order(1);
         elemeClient.getFoodService().update(foodSave);
     }
 
+    public static String ToDBC(String input) {
+        char c[] = input.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] == '\u3000') {
+                c[i] = ' ';
+            } else if (c[i] > '\uFF00' && c[i] < '\uFF5F') {
+                c[i] = (char) (c[i] - 65248);
+
+            }
+        }
+        return new String(c);
+    }
+
     @Test
     public void testRemove() throws ElemeErrorException {
-        FoodSave foodSave = new FoodSave();
-        foodSave.setFood_category_id(10963900L);
-        foodSave.setDescription("西红柿炒肉");
-        foodSave.setName("西红柿炒肉");
-        foodSave.setPrice(12.00f);
-        foodSave.setMax_stock(1000);
-        foodSave.setStock(100);
-        foodSave.setSort_order(1);
-        foodSave.setPacking_fee(0.00f);
-        String image_hash = elemeClient.getImageService().uploadByUrl("http://i2.xygcdn.com/login/xyglogo.jpg");
-        System.out.println(image_hash);
-        foodSave.setImage_hash(image_hash);
-        Long foodId = elemeClient.getFoodService().add(foodSave);
-        Food food = elemeClient.getFoodService().getById(foodId);
-        System.out.println(food);
-        elemeClient.getFoodService().remove(foodId);
+//        FoodSave foodSave = new FoodSave();
+//        foodSave.setFood_category_id(10963900L);
+//        foodSave.setDescription("西红柿炒肉");
+//        foodSave.setName("西红柿炒肉");
+//        foodSave.setPrice(12.00f);
+//        foodSave.setMax_stock(1000);
+//        foodSave.setStock(100);
+//        foodSave.setSort_order(1);
+//        foodSave.setPacking_fee(0.00f);
+//        String image_hash = elemeClient.getImageService().uploadByUrl("http://i2.xygcdn.com/login/xyglogo.jpg");
+//        System.out.println(image_hash);
+//        foodSave.setImage_hash(image_hash);
+//        Long foodId = elemeClient.getFoodService().add(foodSave);
+//        Food food = elemeClient.getFoodService().getById(foodId);
+//        System.out.println(food);
+        elemeClient.getFoodService().remove(142703090L);
     }
 
     @Test
@@ -170,10 +189,10 @@ public class FoodServiceTest extends ServiceTest {
         elemeClient.getFoodService().removeAll(foodIds);
     }
 
-
+    //12673189, 12671470
     @Test
     public void testGetsByFoodCategoryId() throws ElemeErrorException {
-        List<Food> foods = elemeClient.getFoodService().getsByFoodCategoryId(10963900L);
+        List<Food> foods = elemeClient.getFoodService().getsByFoodCategoryId(14051990L);
         System.out.println(foods);
     }
 

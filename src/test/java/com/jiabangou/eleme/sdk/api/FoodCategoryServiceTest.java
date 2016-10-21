@@ -18,7 +18,7 @@ public class FoodCategoryServiceTest extends ServiceTest {
         FoodCategoryService foodCategoryService = elemeClient.getFoodCategoryService();
         FoodCategorySave foodCategorySave = new FoodCategorySave();
         foodCategorySave.setName("今日大减价");
-        foodCategorySave.setRestaurant_id(62028381L);
+        foodCategorySave.setRestaurant_id(1303718L);
         foodCategorySave.setWeight(1);
         foodCategorySave.setFood_category_id(foodCategoryService.add(foodCategorySave));
         System.out.print(foodCategorySave);
@@ -58,9 +58,15 @@ public class FoodCategoryServiceTest extends ServiceTest {
     public void testGetsByRestaurantId() throws ElemeErrorException {
         FoodCategoryService foodCategoryService = elemeClient.getFoodCategoryService();
 
-        System.out.println(foodCategoryService.getsByRestaurantId(1199500L));
-//        foodCategoryService.removeAll(804622L);
+        System.out.println(foodCategoryService.getsByRestaurantId(1303718L));
+//        foodCategoryService.removeAll(1199500L);
 //        System.out.println(foodCategoryService.getsByRestaurantId(804622L));
+    }
+
+    @Test
+    public void remove() throws ElemeErrorException {
+        FoodCategoryService foodCategoryService = elemeClient.getFoodCategoryService();
+        foodCategoryService.remove(12630144L);
     }
 
     @Test
@@ -177,4 +183,6 @@ public class FoodCategoryServiceTest extends ServiceTest {
         foodCategory = foodCategoryService.getById(1234L);
         System.out.println(foodCategory);
     }
+
+
 }

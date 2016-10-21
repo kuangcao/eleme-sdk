@@ -29,4 +29,8 @@ public interface ElemeClient {
 
     CommentService getCommentService();
 
+    NewFoodService getNewFoodService();
+
+    NewFoodCategoryService getNewFoodCategoryService();
+
 }

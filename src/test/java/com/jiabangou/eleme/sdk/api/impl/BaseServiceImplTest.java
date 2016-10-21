@@ -1,7 +1,6 @@
 package com.jiabangou.eleme.sdk.api.impl;
 
 import com.jiabangou.eleme.sdk.api.ElemeConfigStorage;
-import com.jiabangou.eleme.sdk.api.LogListener;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -27,7 +26,7 @@ public class BaseServiceImplTest {
                 return "5b14c2424f82e55172e3f331da577a89719ae955"; // 全聚德
             }
         },
-                (String cmd, boolean isSuccess, String request, String response) -> {
+                (String cmd, String method, boolean isSuccess, String request, String response) -> {
             });
         Map<String, String> params = new HashMap<String, String>();
         params.put("food_id", "123");

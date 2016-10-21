@@ -70,7 +70,7 @@ public class OrderServiceTest extends ServiceTest {
     @Test
     public void testGet() throws ElemeErrorException {
         OrderService orderService = elemeClient.getOrderService();
-        System.out.println(orderService.get(100902308048030522L));
+        System.out.println(orderService.get(101078974172647476L));
     }
 
 
