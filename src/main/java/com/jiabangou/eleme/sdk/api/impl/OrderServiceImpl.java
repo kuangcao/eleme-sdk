@@ -74,6 +74,17 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         }});
     }
 
+    @Override
+    public void complete(Long elemeOrderId) throws ElemeErrorException {
+        if (elemeOrderId == null) {
+            throw new ElemeErrorException(-1, "eleme_order_id is required.");
+        }
+        execute(HTTP_METHOD_PUT, ORDER_ELEME_ORDER_ID_STATUS, new HashMap<String, String>() {{
+            put("eleme_order_id", String.valueOf(elemeOrderId));
+            put("status", String.valueOf(OrderStatus.STATUS_CODE_FINISHED));
+        }});
+    }
+
 
     @Override
     public List<Long> getNewOrderIds() throws ElemeErrorException {

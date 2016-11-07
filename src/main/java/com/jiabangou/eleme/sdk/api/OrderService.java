@@ -1,9 +1,9 @@
 package com.jiabangou.eleme.sdk.api;
 
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
-import com.jiabangou.eleme.sdk.model.*;
+import com.jiabangou.eleme.sdk.model.Order;
+import com.jiabangou.eleme.sdk.model.OrderDelivery;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -62,6 +62,13 @@ public interface OrderService {
      * @throws ElemeErrorException
      */
     void confirm(Long elemeOrderId) throws ElemeErrorException;
+
+    /**
+     * 完成订单
+     * @param elemeOrderId
+     * @throws ElemeErrorException
+     */
+    void complete(Long elemeOrderId) throws ElemeErrorException;
 
     /**
      *
