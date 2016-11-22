@@ -1,5 +1,6 @@
-package com.jiabangou.eleme.sdk.api;
+package com.jiabangou.eleme.sdk.api.impl;
 
+import com.jiabangou.eleme.sdk.api.ServiceTest;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.Food;
 import com.jiabangou.eleme.sdk.model.FoodSave;
@@ -50,11 +51,18 @@ public class FoodServiceTest extends ServiceTest {
     }
 
     @Test
+    public void uploadImage() throws ElemeErrorException {
+        String image_hash = elemeClient.getImageService().uploadByUrl("http://i.test.xygcdn.com/1r/h/cr_qtL_500x500.jpg@750w_750h_1e_1c_1pr");
+        System.out.println(image_hash);
+    }
+
+    @Test
     public void testUpdate() throws ElemeErrorException {
-        Food food = elemeClient.getFoodService().getById(127999351L);
-        System.out.println(food);
+//        Food food = elemeClient.getFoodService().getById(161233064L);
+//        System.out.println(food);
+//        FoodSave foodSave = TypeUtils.castToJavaBean(food, FoodSave.class);
         FoodSave foodSave = new FoodSave();
-        foodSave.setFood_id(food.getFood_id());
+        foodSave.setFood_id(144856428L);
 //        String descOld = "@#!!@#$%^&*()_^…… SGFDSF＠＃￥＠＃￥＃％￥……％＆……×＆（×（））（";
 //        String desc = descOld.replace("。", ".").replace("——", "-").
 //                replace("、", " ").replace("【", " ").replace("】", " ").replace("《", " ").
@@ -66,10 +74,11 @@ public class FoodServiceTest extends ServiceTest {
 //        foodSave.setDescription("~!@#$%^&():?><,./';:'");
 //        foodSave.setName(food.getFood_name());
 //        foodSave.setPrice(food.getPrice());
-        foodSave.setName("你好我是滴减肥代理商空间反垄断");
-        foodSave.setMax_stock(400);
-        foodSave.setStock(14);
+//        foodSave.setName("你好我是滴减肥代理商空间反垄断");
+//        foodSave.setMax_stock(400);
+//        foodSave.setStock(14);
 //        foodSave.setSort_order(1);
+        foodSave.setTp_food_id("144856428");
         elemeClient.getFoodService().update(foodSave);
     }
 

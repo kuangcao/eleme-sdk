@@ -1,6 +1,7 @@
-package com.jiabangou.eleme.sdk.api;
+package com.jiabangou.eleme.sdk.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jiabangou.eleme.sdk.api.ServiceTest;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.*;
 import org.junit.Test;
@@ -17,32 +18,33 @@ public class RestaurantServiceTest extends ServiceTest {
 
     @Test
     public void testGet() throws ElemeErrorException {
-        Restaurant restaurant = elemeClient.getRestaurantService().get(1403447L);
+        Restaurant restaurant = elemeClient.getRestaurantService().get(1403583L);
         System.out.println(restaurant);
     }
 
     @Test
     public void testGetMenu() throws ElemeErrorException {
-        List<FoodCategoryDetail> foodCategoryDetails = elemeClient.getRestaurantService().getMenu(1298521L);
+        List<FoodCategoryDetail> foodCategoryDetails = elemeClient.getRestaurantService().getMenu(1809202L);
         System.out.println(foodCategoryDetails);
-        foodCategoryDetails = elemeClient.getRestaurantService().getMenu(1199500L);
-        System.out.println(foodCategoryDetails);
+//        foodCategoryDetails = elemeClient.getRestaurantService().getMenu(1199500L);
+//        System.out.println(foodCategoryDetails);
     }
 
     @Test
     public void testGetUpdate() throws ElemeErrorException {
-        Restaurant restaurant = elemeClient.getRestaurantService().get(1199500L);
+        Restaurant restaurant = elemeClient.getRestaurantService().get(1809202L);
         System.out.println(restaurant);
         RestaurantSave restaurantSave = new RestaurantSave();
         restaurantSave.setOpen_time("00:00-23:59");
-        restaurantSave.setRestaurant_id(1199500L);
-        restaurantSave.setAgent_fee(1);
-        restaurantSave.setPacking_fee(20f);
-        restaurantSave.setGeo(restaurant.getLongitude() + "," + restaurant.getLatitude());
-        restaurantSave.setDescription("永不开张的店");
-        restaurantSave.setName("永不开张的店");
-        restaurantSave.setPhone("18657237231");
-        restaurantSave.setDeliver_description("怎么开");
+        restaurantSave.setRestaurant_id(1809202L);
+//        restaurantSave.setAgent_fee(1);
+//        restaurantSave.setPacking_fee(20f);
+//        restaurantSave.setGeo(restaurant.getLongitude() + "," + restaurant.getLatitude());
+//        restaurantSave.setDescription("永不开张的店");
+//        restaurantSave.setName("永不开张的店");
+        restaurantSave.setPhone("010-51050271");
+//        restaurantSave.setDeliver_description("怎么开");
+        restaurantSave.setIs_valid(1);
         elemeClient.getRestaurantService().update(restaurantSave);
     }
 
@@ -77,7 +79,7 @@ public class RestaurantServiceTest extends ServiceTest {
 
     @Test
     public void testIsOpen() throws ElemeErrorException {
-        elemeClient.getRestaurantService().setIsOpen(1199500L, true);
+//        elemeClient.getRestaurantService().setIsOpen(1199500L, true);
         elemeClient.getRestaurantService().setIsOpen(1298521L, true);
     }
 

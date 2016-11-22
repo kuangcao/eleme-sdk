@@ -1,5 +1,6 @@
-package com.jiabangou.eleme.sdk.api;
+package com.jiabangou.eleme.sdk.api.impl;
 
+import com.jiabangou.eleme.sdk.api.ServiceTest;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import org.junit.Test;
 

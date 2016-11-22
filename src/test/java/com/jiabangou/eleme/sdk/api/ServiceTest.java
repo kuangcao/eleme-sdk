@@ -17,14 +17,12 @@ public class ServiceTest {
         elemeClient = new ElemeClientImpl(new ElemeConfigStorage() {
             @Override
             public String getConsumerKey() {
-//                return "0170804777";
-                return "3459598486"; // 全聚德
+                return "1111111";
             }
 
             @Override
             public String getConsumerSecret() {
-//                return "87217cb263701f90316236c4df00d9352fb1da76";
-                return "5b14c2424f82e55172e3f331da577a89719ae955"; // 全聚德
+                return "aaaaaaa";
             }
 
         });

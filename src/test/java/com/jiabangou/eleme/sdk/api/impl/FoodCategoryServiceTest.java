@@ -1,5 +1,7 @@
-package com.jiabangou.eleme.sdk.api;
+package com.jiabangou.eleme.sdk.api.impl;
 
+import com.jiabangou.eleme.sdk.api.FoodCategoryService;
+import com.jiabangou.eleme.sdk.api.ServiceTest;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.*;
 import org.junit.Assert;
@@ -58,7 +60,7 @@ public class FoodCategoryServiceTest extends ServiceTest {
     public void testGetsByRestaurantId() throws ElemeErrorException {
         FoodCategoryService foodCategoryService = elemeClient.getFoodCategoryService();
 
-        System.out.println(foodCategoryService.getsByRestaurantId(1303718L));
+        System.out.println(foodCategoryService.getsByRestaurantId(1199500L));
 //        foodCategoryService.removeAll(1199500L);
 //        System.out.println(foodCategoryService.getsByRestaurantId(804622L));
     }
@@ -180,9 +182,15 @@ public class FoodCategoryServiceTest extends ServiceTest {
         foodCategoryService.remove(foodCategorySave.getFood_category_id());
         FoodCategory foodCategory = foodCategoryService.getById(foodCategorySave.getFood_category_id());
         System.out.println(foodCategory);
-        foodCategory = foodCategoryService.getById(1234L);
+        foodCategory = foodCategoryService.getById(15665028L);
         System.out.println(foodCategory);
     }
 
+    @Test
+    public void removeAll() throws ElemeErrorException {
+        FoodCategoryService foodCategoryService = elemeClient.getFoodCategoryService();
+        //餐厅id: 1390553, 1390624, 1390644, 1390664
+        foodCategoryService.removeAll(1390664L);
+    }
 
 }

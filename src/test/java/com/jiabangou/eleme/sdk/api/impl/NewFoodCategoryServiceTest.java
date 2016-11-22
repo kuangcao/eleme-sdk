@@ -1,5 +1,7 @@
-package com.jiabangou.eleme.sdk.api;
+package com.jiabangou.eleme.sdk.api.impl;
 
+import com.jiabangou.eleme.sdk.api.NewFoodCategoryService;
+import com.jiabangou.eleme.sdk.api.ServiceTest;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.DisplayAttribute;
 import com.jiabangou.eleme.sdk.model.NewFoodCategory;

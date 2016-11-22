@@ -1,5 +1,7 @@
-package com.jiabangou.eleme.sdk.api;
+package com.jiabangou.eleme.sdk.api.impl;
 
+import com.jiabangou.eleme.sdk.api.OrderService;
+import com.jiabangou.eleme.sdk.api.ServiceTest;
 import com.jiabangou.eleme.sdk.exception.ElemeErrorException;
 import com.jiabangou.eleme.sdk.model.OrderStatus;
 import org.junit.Test;
@@ -71,6 +73,12 @@ public class OrderServiceTest extends ServiceTest {
     public void testGet() throws ElemeErrorException {
         OrderService orderService = elemeClient.getOrderService();
         System.out.println(orderService.get(101078974172647476L));
+    }
+
+    @Test
+    public void testComplete() throws ElemeErrorException {
+        OrderService orderService = elemeClient.getOrderService();
+        orderService.complete(101534738349470020L);
     }
 
 
