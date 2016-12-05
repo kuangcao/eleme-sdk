@@ -11,6 +11,8 @@ public enum API {
     LOGIN_SERVICE_LOGIN_BY_USERNAME("arena/invoke/", "LoginService", "loginByUsername"),
     FOOD_SERVICE_GET_FOODS_BY_CATEGORY_ID("goods/invoke/", "food", "getFoodsByCategoryId"),
     FOOD_SERVICE_GET_CATEGORIES("goods/invoke/", "food", "getMainView"),
+    FOOD_SERVICE_BATCH_UPDATE_FOODS("goods/invoke/", "food", "batchUpdateFoods"),
+
     ;
 
     public static final String BASE_URL = "https://app-api.shop.ele.me/";
