@@ -24,7 +24,7 @@ public class LoginServiceImpl extends PcBaseServiceImpl implements LoginService 
         jsonObject.put("username", username);
         jsonObject.put("password", password);
         jsonObject.put("captchaCode", captchaCode);
-        JSONObject result = execute(API.LOGIN_SERVICE_LOGIN_BY_USERNAME, jsonObject, false);
+        JSONObject result = (JSONObject)execute(API.LOGIN_SERVICE_LOGIN_BY_USERNAME, jsonObject, false);
         boolean isSuccess = result.getBoolean("succeed");
         if (!isSuccess) {
             JSONObject failureData = result.getJSONObject("failureData");

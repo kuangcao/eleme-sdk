@@ -25,18 +25,18 @@ public class FoodServiceImpl extends PcBaseServiceImpl implements FoodService {
     }
 
     @Override
-    public Food getFoodsByCategoryId(Long categoryId) {
+    public List<Food> getFoodsByCategoryId(Long categoryId) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("categoryId", categoryId);
-        JSONObject result = execute(API.FOOD_SERVICE_GET_FOODS_BY_CATEGORY_ID, jsonObject);
-        return TypeUtils.castToJavaBean(result, Food.class);
+        JSONArray jsonArray = (JSONArray) execute(API.FOOD_SERVICE_GET_FOODS_BY_CATEGORY_ID, jsonObject);
+        return jsonArray.stream().map(json -> TypeUtils.castToJavaBean(json, Food.class)).collect(toList());
     }
 
     @Override
     public List<Category> getCategories(Long restaurantId) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("restaurantId", restaurantId);
-        JSONObject result = execute(API.FOOD_SERVICE_GET_CATEGORIES, jsonObject);
+        JSONObject result = (JSONObject) execute(API.FOOD_SERVICE_GET_CATEGORIES, jsonObject);
         JSONArray jsonArray = result.getJSONArray("categories");
         return jsonArray.stream().map(json -> TypeUtils.castToJavaBean(json, Category.class)).collect(toList());
     }

@@ -1,5 +1,6 @@
 package com.jiabangou.eleme.pcsdk.api.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jiabangou.eleme.pcsdk.ElemePCConfigStorage;
 import com.jiabangou.eleme.pcsdk.PCLogListener;
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 public class PcBaseServiceImpl {
 
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    public static final MediaType JSONMediaType = MediaType.parse("application/json; charset=utf-8");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PcBaseServiceImpl.class);
 
@@ -32,11 +33,11 @@ public class PcBaseServiceImpl {
         }
     }
 
-    protected JSONObject execute(API api, JSONObject params) throws ElemePCErrorException {
+    protected JSON execute(API api, JSONObject params) throws ElemePCErrorException {
         return execute(api, params, true);
     }
 
-    protected JSONObject execute(API api, JSONObject params, boolean isAuth) throws ElemePCErrorException {
+    protected JSON execute(API api, JSONObject params, boolean isAuth) throws ElemePCErrorException {
         ReqPack reqPack= ReqPack.build(api, params);
         if (isAuth) {
             reqPack.getMetas().setKsid(configStorage.getKsid());
@@ -45,7 +46,7 @@ public class PcBaseServiceImpl {
         Request.Builder builder = new Request.Builder().url(api.getUrl())
                 .header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36")
                 .header("Origin", "http://melody.shop.ele.me")
-                .post(RequestBody.create(JSON, jsonStr));
+                .post(RequestBody.create(JSONMediaType, jsonStr));
 
         String respStr = null;
         try {

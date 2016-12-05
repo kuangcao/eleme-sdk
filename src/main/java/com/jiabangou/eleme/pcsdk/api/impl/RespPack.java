@@ -1,6 +1,6 @@
 package com.jiabangou.eleme.pcsdk.api.impl;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 
 import java.io.Serializable;
 
@@ -13,7 +13,7 @@ public class RespPack implements Serializable {
     private Error error;
     private String id;
     private String ncp;
-    private JSONObject result;
+    private JSON result;
 
     public Error getError() {
         return error;
@@ -42,11 +42,11 @@ public class RespPack implements Serializable {
         return this;
     }
 
-    public JSONObject getResult() {
+    public JSON getResult() {
         return result;
     }
 
-    public RespPack setResult(JSONObject result) {
+    public RespPack setResult(JSON result) {
         this.result = result;
         return this;
     }

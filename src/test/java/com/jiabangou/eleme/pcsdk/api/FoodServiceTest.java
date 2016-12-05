@@ -15,6 +15,8 @@ public class FoodServiceTest extends PCServiceTest {
     @Test
     public void testGetCategories() throws ElemePCLoginServiceException {
         System.out.println(elemeClient.getFoodService().getCategories(1809202L));
+
+        System.out.println(elemeClient.getFoodService().getFoodsByCategoryId(27831891385L));
     }
 
 }

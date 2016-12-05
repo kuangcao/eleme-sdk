@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface FoodService {
 
-    Food getFoodsByCategoryId(Long categoryId);
+    List<Food> getFoodsByCategoryId(Long categoryId);
 
     List<Category> getCategories(Long restaurantId);
 
