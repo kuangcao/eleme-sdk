@@ -1,5 +1,7 @@
 package com.jiabangou.eleme.pcsdk.api.impl;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.UUID;
@@ -18,15 +20,16 @@ public class ReqPack implements Serializable {
     private String service;
     private String method;
     private String ncp;
-    private Map<String, Object> params;
+    private JSONObject params;
     private Metas metas;
 
-    public static ReqPack build(API api) {
+    public static ReqPack build(API api, JSONObject params) {
         return new ReqPack()
                 .setService(api.getService())
                 .setMethod(api.getMethod())
                 .setNcp(NCP)
                 .setMetas(Metas.build())
+                .setParams(params)
                 .setId(UUID.randomUUID().toString());
     }
 
@@ -66,11 +69,11 @@ public class ReqPack implements Serializable {
         return this;
     }
 
-    public Map<String, Object> getParams() {
+    public JSONObject getParams() {
         return params;
     }
 
-    public ReqPack setParams(Map<String, Object> params) {
+    public ReqPack setParams(JSONObject params) {
         this.params = params;
         return this;
     }
