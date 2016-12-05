@@ -12,7 +12,7 @@ import okhttp3.OkHttpClient;
  * 登录服务
  * Created by freeway on 2016/12/4.
  */
-public class LoginServiceImpl extends PcBaseServiceImpl implements LoginService {
+public class LoginServiceImpl extends PCBaseServiceImpl implements LoginService {
 
     public LoginServiceImpl(OkHttpClient client, ElemePCConfigStorage configStorage, PCLogListener logListener) {
         super(client, configStorage, logListener);

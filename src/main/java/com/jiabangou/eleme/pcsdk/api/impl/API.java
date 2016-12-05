@@ -1,7 +1,5 @@
 package com.jiabangou.eleme.pcsdk.api.impl;
 
-import java.util.Map;
-
 /**
  * api 定义
  * Created by freeway on 2016/12/4.
@@ -12,6 +10,7 @@ public enum API {
     FOOD_SERVICE_GET_FOODS_BY_CATEGORY_ID("goods/invoke/", "food", "getFoodsByCategoryId"),
     FOOD_SERVICE_GET_CATEGORIES("goods/invoke/", "food", "getMainView"),
     FOOD_SERVICE_BATCH_UPDATE_FOODS("goods/invoke/", "food", "batchUpdateFoods"),
+    FOOD_SERVICE_GET_FOOD_VIEW("goods/invoke/", "food", "getFoodView"),
 
     ;
 
