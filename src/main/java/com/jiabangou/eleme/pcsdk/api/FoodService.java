@@ -11,6 +11,14 @@ import java.util.List;
  */
 public interface FoodService {
 
+    void fillStock(Long foodId);
+
+    void fillStock(List<Long> foodIds);
+
+    void clearStock(Long foodId);
+
+    void clearStock(List<Long> foodIds);
+
     List<Food> getFoodsByCategoryId(Long categoryId);
 
     List<Category> getCategories(Long restaurantId);

@@ -25,6 +25,26 @@ public class FoodServiceImpl extends PcBaseServiceImpl implements FoodService {
     }
 
     @Override
+    public void fillStock(Long foodId) {
+
+    }
+
+    @Override
+    public void fillStock(List<Long> foodIds) {
+
+    }
+
+    @Override
+    public void clearStock(Long foodId) {
+
+    }
+
+    @Override
+    public void clearStock(List<Long> foodIds) {
+
+    }
+
+    @Override
     public List<Food> getFoodsByCategoryId(Long categoryId) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("categoryId", categoryId);
