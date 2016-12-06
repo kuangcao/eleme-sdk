@@ -24,8 +24,29 @@ public interface FoodService {
 
     Food getFood(Long foodId);
 
+    void removeFood(Long foodId);
+
+    Food createFood(Food food);
+
+    Food updateFood(Food food);
+
     String uploadFoodImage(String url, MediaType mediaType);
 
     List<Category> getCategories(Long restaurantId);
 
+    void setFoodPosition(Long foodId, int position);
+
+    void onShelf(Long foodId);
+
+    void onShelf(List<Long> foodIds);
+
+    void offShelf(Long foodId);
+
+    void offShelf(List<Long> foodIds);
+
+    Category createCategory(Long restaurantId, String name, String description);
+
+    void removeCategory(Long categoryId);
+
+    Category updateCategory(Category category);
 }

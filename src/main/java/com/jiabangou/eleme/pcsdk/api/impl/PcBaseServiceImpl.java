@@ -7,6 +7,7 @@ import com.jiabangou.eleme.pcsdk.PCLogListener;
 import com.jiabangou.eleme.pcsdk.exception.ElemePCErrorException;
 import com.jiabangou.eleme.pcsdk.model.MediaTypeConst;
 import okhttp3.*;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +44,11 @@ public class PCBaseServiceImpl {
         File file = null;
         try {
             URL urlObj = new URL(url);
-            file = new File(urlObj.toURI());
+            String tDir = System.getProperty("java.io.tmpdir");
+            String path = tDir + UUID.randomUUID().toString();
+            file = new File(path);
+            file.deleteOnExit();
+            FileUtils.copyURLToFile(urlObj, file);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -101,6 +106,7 @@ public class PCBaseServiceImpl {
         }
         RespPack respPack = JSONObject.parseObject(respStr, RespPack.class);
         if (respPack.getError() != null) {
+            logging(api.getUrl(), api.getMethod()+"."+api.getService(), false, jsonStr, respStr);
             throw new ElemePCErrorException(respPack.getError());
         }
         if (!respPack.getId().equals(reqPack.getId())) {
