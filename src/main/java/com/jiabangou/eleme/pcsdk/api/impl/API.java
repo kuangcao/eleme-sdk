@@ -22,6 +22,13 @@ public enum API {
     FOOD_SERVICE_REMOVE_FOOD("goods/invoke/", "food", "removeFood"),
     FOOD_SERVICE_CREATE_FOOD("goods/invoke/", "food", "createFood"),
     FOOD_SERVICE_UPDATE_FOOD("goods/invoke/", "food", "updateFood"),
+
+    POLLING_SERVICE_POLLING_FOR_HIGH_FREQUENCY("nevermore/invoke/", "PollingService", "pollingForHighFrequency"),
+
+    ORDER_SERVICE_QUERY_ORDER("nevermore/invoke/", "OrderService", "queryOrder"),
+    ORDER_SERVICE_CONFIRM_ORDER("order/invoke/", "order", "confirmOrder"),
+    ORDER_SERVICE_INVALIDATE_ORDER("nevermore/invoke/", "OrderService", "invalidateOrder"),
+
     ;
 
     public static final String BASE_URL = "https://app-api.shop.ele.me/";

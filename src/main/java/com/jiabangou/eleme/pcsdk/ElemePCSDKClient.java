@@ -2,6 +2,7 @@ package com.jiabangou.eleme.pcsdk;
 
 import com.jiabangou.eleme.pcsdk.api.FoodService;
 import com.jiabangou.eleme.pcsdk.api.LoginService;
+import com.jiabangou.eleme.pcsdk.api.OrderService;
 
 /**
  *
@@ -16,4 +17,6 @@ public interface ElemePCSDKClient {
     LoginService getLoginService();
 
     FoodService getFoodService();
+
+    OrderService getOrderService();
 }
