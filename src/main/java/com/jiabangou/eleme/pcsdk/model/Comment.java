@@ -37,7 +37,7 @@ public class Comment implements Serializable {
     /**
      * 	int	是否已回复(0:未回复，1:已回复)
      */
-    private Short is_replied;
+    private boolean replied;
     /**
      * 	int	评论星级
      */
@@ -96,15 +96,6 @@ public class Comment implements Serializable {
         return this;
     }
 
-    public Short getIs_replied() {
-        return is_replied;
-    }
-
-    public Comment setIs_replied(Short is_replied) {
-        this.is_replied = is_replied;
-        return this;
-    }
-
     public Short getRating() {
         return rating;
     }
@@ -150,6 +141,15 @@ public class Comment implements Serializable {
         return this;
     }
 
+    public boolean isReplied() {
+        return replied;
+    }
+
+    public Comment setReplied(boolean replied) {
+        this.replied = replied;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -158,7 +158,7 @@ public class Comment implements Serializable {
                 ", content='" + content + '\'' +
                 ", shopId=" + shopId +
                 ", createdAt='" + createdAt + '\'' +
-                ", is_replied=" + is_replied +
+                ", replied=" + replied +
                 ", rating=" + rating +
                 ", replyAt='" + replyAt + '\'' +
                 ", replyContent='" + replyContent + '\'' +
