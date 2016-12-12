@@ -29,6 +29,9 @@ public enum API {
     ORDER_SERVICE_CONFIRM_ORDER("order/invoke/", "order", "confirmOrder"),
     ORDER_SERVICE_INVALIDATE_ORDER("nevermore/invoke/", "OrderService", "invalidateOrder"),
 
+    SHOP_RATING_QUERY_SINGLE_SHOP_RATING("ugc/invoke/", "shopRating", "querySingleShopRating"),
+    SHOP_RATING_REPLY_RATING("ugc/invoke/", "shopRating", "replyRating"),
+
     ;
 
     public static final String BASE_URL = "https://app-api.shop.ele.me/";
