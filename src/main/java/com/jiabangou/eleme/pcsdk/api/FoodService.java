@@ -20,6 +20,8 @@ public interface FoodService {
 
     void clearStock(List<Long> foodIds);
 
+    void updateFoodStock(Long foodId, int maxStock, int stock);
+
     List<Food> getFoodsByCategoryId(Long categoryId);
 
     Food getFood(Long foodId);
@@ -32,8 +34,6 @@ public interface FoodService {
 
     String uploadFoodImage(String url, MediaType mediaType);
 
-    List<Category> getCategories(Long restaurantId);
-
     void setFoodPosition(Long foodId, int position);
 
     void onShelf(Long foodId);
@@ -43,6 +43,10 @@ public interface FoodService {
     void offShelf(Long foodId);
 
     void offShelf(List<Long> foodIds);
+
+    List<Category> getCategories(Long restaurantId);
+
+    void setCategoryPosition(Long categoryId, int position);
 
     Category createCategory(Long restaurantId, String name, String description);
 

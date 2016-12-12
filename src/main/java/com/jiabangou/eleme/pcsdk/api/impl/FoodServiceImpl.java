@@ -80,6 +80,21 @@ public class FoodServiceImpl extends PCBaseServiceImpl implements FoodService {
     }
 
     @Override
+    public void updateFoodStock(Long foodId, int maxStock, int stock) {
+        JSONObject params = new JSONObject();
+        JSONArray foodStockUpdate = new JSONArray();
+        params.put("foodStockUpdate", foodStockUpdate);
+
+        JSONObject stockObject = new JSONObject();
+        stockObject.put("foodId", foodId);
+        stockObject.put("maxStock", maxStock);
+        stockObject.put("stock", stock);
+        foodStockUpdate.add(stockObject);
+
+        execute(API.FOOD_SERVICE_UPDATE_FOODS_STOCK, params);
+    }
+
+    @Override
     public List<Food> getFoodsByCategoryId(Long categoryId) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("categoryId", categoryId);
@@ -136,6 +151,14 @@ public class FoodServiceImpl extends PCBaseServiceImpl implements FoodService {
         JSONObject result = (JSONObject) execute(API.FOOD_SERVICE_GET_CATEGORIES, jsonObject);
         JSONArray jsonArray = result.getJSONArray("categories");
         return jsonArray.stream().map(json -> TypeUtils.castToJavaBean(json, Category.class)).collect(toList());
+    }
+
+    @Override
+    public void setCategoryPosition(Long categoryId, int position) {
+        JSONObject params = new JSONObject();
+        params.put("categoryId", categoryId);
+        params.put("position", position);
+        execute(API.FOOD_SERVICE_SET_CATEGORY_POSITION, params);
     }
 
     @Override
