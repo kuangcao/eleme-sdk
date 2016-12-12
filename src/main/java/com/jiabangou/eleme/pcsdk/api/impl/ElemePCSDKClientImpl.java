@@ -3,10 +3,7 @@ package com.jiabangou.eleme.pcsdk.api.impl;
 import com.jiabangou.eleme.pcsdk.ElemePCConfigStorage;
 import com.jiabangou.eleme.pcsdk.ElemePCSDKClient;
 import com.jiabangou.eleme.pcsdk.PCLogListener;
-import com.jiabangou.eleme.pcsdk.api.CommentService;
-import com.jiabangou.eleme.pcsdk.api.FoodService;
-import com.jiabangou.eleme.pcsdk.api.LoginService;
-import com.jiabangou.eleme.pcsdk.api.OrderService;
+import com.jiabangou.eleme.pcsdk.api.*;
 import okhttp3.OkHttpClient;
 
 /**
@@ -23,6 +20,7 @@ public class ElemePCSDKClientImpl implements ElemePCSDKClient {
     private FoodService foodService;
     private OrderService orderService;
     private CommentService commentService;
+    private DeliveryService deliveryService;
 
 
     public ElemePCSDKClientImpl(ElemePCConfigStorage elemePCConfigStorage) {
@@ -76,6 +74,14 @@ public class ElemePCSDKClientImpl implements ElemePCSDKClient {
             commentService = new CommentServiceImpl(getClient(), configStorage, logListener);
         }
         return commentService;
+    }
+
+    @Override
+    public DeliveryService getDeliveryService() {
+        if (deliveryService == null) {
+            deliveryService = new DeliveryServiceImpl(getClient(), configStorage, logListener);
+        }
+        return deliveryService;
     }
 
 }

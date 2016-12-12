@@ -34,6 +34,8 @@ public enum API {
     SHOP_RATING_QUERY_SINGLE_SHOP_RATING("ugc/invoke/", "shopRating", "querySingleShopRating"),
     SHOP_RATING_REPLY_RATING("ugc/invoke/", "shopRating", "replyRating"),
 
+    DELIVERY_SERVICE_GET_RIDER_LOCATION("nevermore/invoke/", "DeliveryService", "getRiderLocation"),
+
     ;
 
     public static final String BASE_URL = "https://app-api.shop.ele.me/";
