@@ -26,12 +26,12 @@ public interface OrderService {
 
     /**
      * 接单
-     * @param orderId
+     * @param orderId 订单号
      */
     void confirm(Long orderId);
 
     /**
-     * 拒绝接单
+     * 拒绝接单、取消订单, 即便接单后也可以取消
      * @param orderId 订单号
      * @param refuseReason 拒绝理由
      * @param remark 备注
