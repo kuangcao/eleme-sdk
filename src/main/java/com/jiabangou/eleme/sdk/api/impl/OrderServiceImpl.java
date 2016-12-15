@@ -126,7 +126,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         if (elemeOrderId == null) {
             throw new ElemeErrorException(-1, "eleme_order_id is required.");
         }
-        execute(HTTP_METHOD_PUT, ORDER_ELEME_ORDER_ID_AGREE_REFUND, new HashMap<String, String>() {{
+        execute(HTTP_METHOD_POST, ORDER_ELEME_ORDER_ID_AGREE_REFUND, new HashMap<String, String>() {{
             put("eleme_order_id", String.valueOf(elemeOrderId));
         }});
     }
@@ -136,7 +136,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
         if (elemeOrderId == null) {
             throw new ElemeErrorException(-1, "eleme_order_id is required.");
         }
-        execute(HTTP_METHOD_PUT, ORDER_ELEME_ORDER_ID_DISAGREE_REFUND, new HashMap<String, String>() {{
+        execute(HTTP_METHOD_POST, ORDER_ELEME_ORDER_ID_DISAGREE_REFUND, new HashMap<String, String>() {{
             put("eleme_order_id", String.valueOf(elemeOrderId));
             if (reason != null) {
                 put("reason", reason);
