@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 新菜品服务实现
  * Created by wanglei on 16-10-20.
  */
 public class NewFoodServiceImpl extends BaseServiceImpl implements NewFoodService {
@@ -63,5 +64,23 @@ public class NewFoodServiceImpl extends BaseServiceImpl implements NewFoodServic
         Map<String, String> params = new HashMap<>();
         params.put("food_id", foodId.toString());
         execute(HTTP_METHOD_DELETE, NEW_FOOD_FOOD_ID, params);
+    }
+
+    @Override
+    public void onShelf(Long foodId) throws ElemeErrorException {
+        NewFood food = getById(foodId);
+        if (food != null) {
+            food.setOn_shelf(NewFood.ON_SHELF);
+        }
+        update(food);
+    }
+
+    @Override
+    public void offShelf(Long foodId) throws ElemeErrorException {
+        NewFood food = getById(foodId);
+        if (food != null) {
+            food.setOn_shelf(NewFood.OFF_SHELF);
+        }
+        update(food);
     }
 }

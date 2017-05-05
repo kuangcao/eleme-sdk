@@ -4,9 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 新菜品对象
  * Created by wanglei on 16-10-19.
  */
 public class NewFood implements Serializable {
+
+
+    private static final long serialVersionUID = 6613624722322641657L;
+
+    public final static int ON_SHELF = 1;
+    public final static int OFF_SHELF = 0;
 
     private Long food_id;  //食物id
     private Long food_category_id;  //饿了么食物分类ID
@@ -14,7 +21,9 @@ public class NewFood implements Serializable {
     private Float price;  //食物单价
     private String description;  //食物描述
     private String image_hash;  //图片image_hash（如何获得 /api/merchant/image）
+    private int on_shelf = ON_SHELF;
     private Labels labels;  //标签属性集合
+
     private List<Spec> specs;  //具体参考下文中示例 规格
 
     public Long getFood_id() {
@@ -73,6 +82,14 @@ public class NewFood implements Serializable {
         this.labels = labels;
     }
 
+    public int getOn_shelf() {
+        return on_shelf;
+    }
+
+    public void setOn_shelf(int on_shelf) {
+        this.on_shelf = on_shelf;
+    }
+
     public List<Spec> getSpecs() {
         return specs;
     }
@@ -90,6 +107,7 @@ public class NewFood implements Serializable {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", image_hash='" + image_hash + '\'' +
+                ", on_shelf=" + on_shelf +
                 ", labels=" + labels +
                 ", specs=" + specs +
                 '}';
